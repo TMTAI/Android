@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ctu.tranminhtai.ungdung.Traloicauhoi">
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:text="Điểm:"
+        android:id="@+id/txtach"
+        android:textColor="#ff243d74"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="130dp"
+        android:id="@+id/txnoidungcauhoi"
+        android:textSize="20dp"
+        android:scrollbars="vertical"
+        android:textColor="#ff16450e"
+        android:layout_below="@+id/textViewSoCauConLai"
+        android:layout_alignLeft="@+id/ButtonA"
+        android:layout_alignStart="@+id/ButtonA"
+        android:layout_marginTop="43dp"
+        android:layout_above="@+id/ButtonA"
+        android:layout_alignRight="@+id/ButtonA"
+        android:layout_alignEnd="@+id/ButtonA" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:id="@+id/ButtonD"
+        android:background="#ff97e9f8"
+        android:layout_marginBottom="99dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/txtach"
+        android:layout_toEndOf="@+id/txtach" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:id="@+id/ButtonC"
+        android:background="#ff97e9f8"
+        android:layout_above="@+id/ButtonD"
+        android:layout_toRightOf="@+id/txtach" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:id="@+id/ButtonB"
+        android:background="#ff97e9f8"
+        android:layout_above="@+id/ButtonC"
+        android:layout_toRightOf="@+id/txtach" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:id="@+id/ButtonA"
+        android:background="#ff97e9f8"
+        android:layout_above="@+id/ButtonB"
+        android:layout_toRightOf="@+id/txtach" />
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="diem"
+        android:textColor="#ffc43d27"
+        android:textStyle="italic"
+        android:id="@+id/TextViewSoDiem"
+        android:background="#ffcbff18"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/txtach"
+        android:layout_toEndOf="@+id/txtach" />
+
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Lượt chơi:"
+        android:id="@+id/TextViewLuotChoi"
+        android:textColor="#ff243d74"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/TextViewSoLuotChoi"
+        android:layout_toStartOf="@+id/TextViewSoLuotChoi" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="số"
+        android:id="@+id/TextViewSoLuotChoi"
+        android:textColor="#fa062b"
+        android:background="#e9f5fb37"
+        android:textStyle="italic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textViewSoCauConLai"
+        android:layout_below="@+id/txtach"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
