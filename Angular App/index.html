@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Angular Excercise</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+   <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+  <script type="text/javascript" src="js/app.js"></script>
+
+</head>
+<body ng-app='myApp' ng-cloak>
+  <div ng-controller="myController">
+
+    <div layout="row">
+
+      <div>
+         <ul>
+            <li><a href="" ng-click="clickPoem()">Poem</a></li>
+            <li><a href="" ng-click="clickStory()">Story</a></li>
+            <li><a href="" ng-click="clickSong()">Song</a></li>
+            <li><a href="" ng-click="clickSearch()">Search</a></li>
+          </ul>
+      </div>
+
+      <div flex="66" flex="88">
+        <div ng-include="view"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
