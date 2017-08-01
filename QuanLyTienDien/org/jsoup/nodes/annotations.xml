@@ -1,0 +1,5 @@
+<root>
+    <item name='org.jsoup.nodes.Document'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>

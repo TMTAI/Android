@@ -40,6 +40,7 @@ import java.util.List;
 import ctu.tmtai.com.adapter.CustomerAdapter;
 import ctu.tmtai.com.adapter.UserAdapter;
 import ctu.tmtai.com.api.ApiApp;
+import ctu.tmtai.com.api.MyProgressDialog;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.notify.Notify;
 import ctu.tmtai.com.service.UserService;
@@ -57,6 +58,7 @@ public class AdminActivity extends AppCompatActivity
 
     private JSONArray arrayUser, arrayKhachHang;
     MyJsonTask task = new MyJsonTask();
+    private MyProgressDialog progressDialog;
     TabHost tabHost;
     FloatingActionButton fab;
 
@@ -70,12 +72,14 @@ public class AdminActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        task.execute();
+        // Hiển thị màn hình chờ khi hệ thống load dữ liệu
+        progressDialog = new MyProgressDialog(this);
+        progressDialog.showProgressBar();
 
         addControls();
         addEvents();
-
-        task.execute();
-
+//        loadList();
         customerAdapter.notifyDataSetChanged();
         userAdapter.notifyDataSetChanged();
     }
@@ -121,7 +125,6 @@ public class AdminActivity extends AppCompatActivity
     private void addTabHost() {
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setup();
-
 
         TabHost.TabSpec tabEmployee = tabHost.newTabSpec(TAB_EMPLOYEE);
         tabEmployee.setContent(R.id.tabEmployee);
@@ -345,9 +348,10 @@ public class AdminActivity extends AppCompatActivity
                 arrayKhachHang = new JSONArray(strAllKhachHang);
 
                 Document documentUser = Jsoup.connect(HTTP_ALL_USER).get();
-                String strAllUser = documentKhachHang.body().text();
+                String strAllUser = documentUser.body().text();
                 arrayUser = new JSONArray(strAllUser);
 
+                progressDialog.closeProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

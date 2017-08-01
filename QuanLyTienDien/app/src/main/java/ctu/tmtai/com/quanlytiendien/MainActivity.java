@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
                 startActivity(intent);
             }else{
                 if (preferences.getString(ROLE, NULL).equals(ROLE_CUSTOMER)){
-                    Intent intent = new Intent(getApplicationContext(), User.class);
+                    Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
                     startActivity(intent);
                 }else if (preferences.getString(ROLE, NULL).equals(ROLE_EMPLOYEE)){
-                    Intent intent = new Intent(getApplicationContext(), User.class);
+                    Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                     startActivity(intent);
                 }
             }
@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
                 String str  = document.body().text();
                 // đọc và chuyển về JSONObject
                 jsonArray = new JSONArray(str);
-                Log.d("JSONARRAY", str);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

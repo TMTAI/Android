@@ -116,8 +116,7 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp {
             role = rdEmployee.getText().toString();
         }
 
-        User user = new User(code, password, electricityMeter, name, birthday, addressNumber, addressDistrict, addressCity, id, phone, isAdmin, role);
-        UserService.addUser(user, AddUserActivity.this);
+
     }
 
     /**

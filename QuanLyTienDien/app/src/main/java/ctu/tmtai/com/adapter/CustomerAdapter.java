@@ -45,7 +45,7 @@ public class CustomerAdapter extends ArrayAdapter<User> {
         User user = this.objects.get(position);
 
         txtItemCustomerName.setText(user.getName());
-        txtItemCustomerAddress.setText(user.getAddressNumber() +", " + user.getAddressDistrict()+", "+user.getAddressCity());
+        txtItemCustomerAddress.setText(user.getAddress());
         txtItemCustomerPhone.setText(user.getPhone());
 
         return view;

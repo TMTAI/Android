@@ -1,5 +1,9 @@
 package ctu.tmtai.com.models;
 
+import java.sql.Blob;
+
+import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
+
 /**
  * Created by tranm on 10-Jul-17.
  */
@@ -7,62 +11,55 @@ package ctu.tmtai.com.models;
 public class User {
     private String code;
     private String password;
-    private String electricityMeter;
     private String name;
     private String birthday;
-    private String addressNumber;
-    private String addressDistrict;
-    private String addressCity;
+    private String address;
+    private String gender;
     private String cmnd;
     private String phone;
     private boolean isAdmin;
     private String role;
+    private Blob avatar;
 
     public User() {
+        this.code = "";
+        this.password = "";
+        this.name = "";
+        this.birthday = "";
+        this.address = "";
+        this.gender = "";
+        this.cmnd = "";
+        this.phone = "";
+        this.isAdmin = false;
+        this.role = ROLE_EMPLOYEE;
+        this.avatar = null;
     }
 
-    public User(String code, String password, String electricityMeter, String name, String birthday, String addressNumber, String addressDistrict, String addressCity, String cmnd, String phone, boolean isAdmin, String role) {
+    public User(String code, String password, String name, String birthday, String address,String cmnd, String phone, boolean isAdmin, String role,  String gender, Blob avatar) {
         this.code = code;
         this.password = password;
-        this.electricityMeter = electricityMeter;
         this.name = name;
         this.birthday = birthday;
-        this.addressNumber = addressNumber;
-        this.addressDistrict = addressDistrict;
-        this.addressCity = addressCity;
+        this.address = address;
         this.cmnd = cmnd;
         this.phone = phone;
         this.isAdmin = isAdmin;
         this.role = role;
+        this.gender = gender;
+        this.avatar = avatar;
     }
 
-    public User(String code, String password, String electricityMeter, String name, String birthday, String addressNumber, String addressDistrict, String addressCity, String cmnd, String phone) {
-        this.code = code;
-        this.password = password;
-        this.electricityMeter = electricityMeter;
-        this.name = name;
-        this.birthday = birthday;
-        this.addressNumber = addressNumber;
-        this.addressDistrict = addressDistrict;
-        this.addressCity = addressCity;
-        this.cmnd = cmnd;
-        this.phone = phone;
-        this.isAdmin = false;
-        this.role = "customer";
-    }
-
-    public User(String code, String password, String name, String birthday, String addressNumber, String addressDistrict, String addressCity, String cmnd, String phone) {
+    public User(String code, String password, String name, String birthday, String address, String gender, String cmnd, String phone, boolean isAdmin, String role) {
         this.code = code;
         this.password = password;
         this.name = name;
         this.birthday = birthday;
-        this.addressNumber = addressNumber;
-        this.addressDistrict = addressDistrict;
-        this.addressCity = addressCity;
+        this.address = address;
+        this.gender = gender;
         this.cmnd = cmnd;
         this.phone = phone;
-        this.isAdmin = false;
-        this.role = "employee";
+        this.isAdmin = isAdmin;
+        this.role = role;
     }
 
     public String getCode() {
@@ -81,14 +78,6 @@ public class User {
         this.password = password;
     }
 
-    public String getElectricityMeter() {
-        return electricityMeter;
-    }
-
-    public void setElectricityMeter(String electricityMeter) {
-        this.electricityMeter = electricityMeter;
-    }
-
     public String getName() {
         return name;
     }
@@ -105,28 +94,20 @@ public class User {
         this.birthday = birthday;
     }
 
-    public String getAddressNumber() {
-        return addressNumber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getAddressDistrict() {
-        return addressDistrict;
+    public String getGender() {
+        return gender;
     }
 
-    public void setAddressDistrict(String addressDistrict) {
-        this.addressDistrict = addressDistrict;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getCmnd() {
@@ -148,6 +129,7 @@ public class User {
     public boolean isAdmin() {
         return isAdmin;
     }
+
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
@@ -158,5 +140,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Blob getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Blob avatar) {
+        this.avatar = avatar;
     }
 }
