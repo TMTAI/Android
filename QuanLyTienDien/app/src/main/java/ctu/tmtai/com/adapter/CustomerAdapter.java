@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.quanlytiendien.R;
 
@@ -20,12 +21,12 @@ import ctu.tmtai.com.quanlytiendien.R;
  * Created by tranm on 15-Jul-17.
  */
 
-public class CustomerAdapter extends ArrayAdapter<User> {
+public class CustomerAdapter extends ArrayAdapter<KhachHang> {
     Activity context;
     int resource;
-    List<User> objects;
+    List<KhachHang> objects;
 
-    public CustomerAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull List<User> objects) {
+    public CustomerAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull List<KhachHang> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -42,10 +43,10 @@ public class CustomerAdapter extends ArrayAdapter<User> {
         TextView txtItemCustomerAddress = (TextView) view.findViewById(R.id.txtItemCustomerAddress);
         TextView txtItemCustomerPhone = (TextView) view.findViewById(R.id.txtItemCustomerPhone);
 
-        User user = this.objects.get(position);
+        KhachHang user = this.objects.get(position);
 
-        txtItemCustomerName.setText(user.getName());
-        txtItemCustomerAddress.setText(user.getAddress());
+        txtItemCustomerName.setText(user.getTenkh());
+        txtItemCustomerAddress.setText(user.getDiachi());
         txtItemCustomerPhone.setText(user.getPhone());
 
         return view;

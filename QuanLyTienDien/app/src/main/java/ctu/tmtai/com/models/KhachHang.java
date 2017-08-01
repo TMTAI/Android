@@ -10,6 +10,7 @@ public class KhachHang {
     private String makh;
     private String tenkh;
     private String diachi;
+    private String makv;
     private String madk;
     private String cmnd;
     private String phone;
@@ -31,12 +32,14 @@ public class KhachHang {
         this.role = "";
         this.password = "";
         this.ngaysinh = "";
+        this.makh = "";
     }
 
-    public KhachHang(String makh, String tenkh, String diachi, String madk, String cmnd, String phone, String gioitinh, Blob avatar, String role, String password, String ngaysinh) {
+    public KhachHang(String makh, String tenkh, String diachi,  String makv, String madk, String cmnd, String phone, String gioitinh, Blob avatar, String role, String password, String ngaysinh) {
         this.makh = makh;
         this.tenkh = tenkh;
         this.diachi = diachi;
+        this.makv = makv;
         this.madk = madk;
         this.cmnd = cmnd;
         this.phone = phone;
@@ -77,6 +80,14 @@ public class KhachHang {
 
     public void setMadk(String madk) {
         this.madk = madk;
+    }
+
+    public String getMakv() {
+        return makv;
+    }
+
+    public void setMakv(String makv) {
+        this.makv = makv;
     }
 
     public String getCmnd() {

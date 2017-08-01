@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -41,17 +42,33 @@ import ctu.tmtai.com.adapter.CustomerAdapter;
 import ctu.tmtai.com.adapter.UserAdapter;
 import ctu.tmtai.com.api.ApiApp;
 import ctu.tmtai.com.api.MyProgressDialog;
+import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.notify.Notify;
 import ctu.tmtai.com.service.UserService;
 
+import static ctu.tmtai.com.util.Constant.ADDRESS;
+import static ctu.tmtai.com.util.Constant.BIRTH_DAY;
+import static ctu.tmtai.com.util.Constant.CMND;
+import static ctu.tmtai.com.util.Constant.CODE;
+import static ctu.tmtai.com.util.Constant.DIA_CHI;
+import static ctu.tmtai.com.util.Constant.GENDER;
+import static ctu.tmtai.com.util.Constant.GIOI_TINH;
 import static ctu.tmtai.com.util.Constant.HTTP_ALL_KHACH_HANG;
 import static ctu.tmtai.com.util.Constant.HTTP_ALL_USER;
+import static ctu.tmtai.com.util.Constant.IS_ADMIN;
+import static ctu.tmtai.com.util.Constant.MA_DK;
+import static ctu.tmtai.com.util.Constant.MA_KH;
+import static ctu.tmtai.com.util.Constant.MA_KHU_VUC;
+import static ctu.tmtai.com.util.Constant.NAME;
+import static ctu.tmtai.com.util.Constant.PASSWORD;
+import static ctu.tmtai.com.util.Constant.PHONE;
 import static ctu.tmtai.com.util.Constant.ROLE;
 import static ctu.tmtai.com.util.Constant.ROLE_CUSTOMER;
 import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
 import static ctu.tmtai.com.util.Constant.TAB_CUSTOMER;
 import static ctu.tmtai.com.util.Constant.TAB_EMPLOYEE;
+import static ctu.tmtai.com.util.Constant.TEN_KH;
 
 public class AdminActivity extends AppCompatActivity
         implements ApiApp, NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +82,8 @@ public class AdminActivity extends AppCompatActivity
     ListView lvCustomer, lvEmployee;
     UserAdapter userAdapter;
     CustomerAdapter customerAdapter;
-    List<User> userList, customerList;
+    List<User> userList;
+    List<KhachHang> customerList;
     EditText txtResetNewPassword, txtResetConfirmPassword;
 
     @Override
@@ -79,9 +97,7 @@ public class AdminActivity extends AppCompatActivity
 
         addControls();
         addEvents();
-//        loadList();
-        customerAdapter.notifyDataSetChanged();
-        userAdapter.notifyDataSetChanged();
+        loadUserList();
     }
 
     @Override
@@ -138,28 +154,69 @@ public class AdminActivity extends AppCompatActivity
 
     }
 
-    private void addUserToList(List list, JSONObject json) {
-        Gson gson = new GsonBuilder().create();
-        User user = gson.fromJson(json.toString(), User.class);
-        list.add(user);
+    private void addUserToList(JSONObject json) {
+        User user = new User();
+        try {
+            user.setCode(json.getString(CODE));
+            user.setPassword(json.getString(PASSWORD));
+            user.setName(json.getString(NAME));
+            user.setBirthday(json.getString(BIRTH_DAY));
+            user.setAddress(json.getString(ADDRESS));
+            user.setCmnd(json.getString(CMND));
+            user.setPhone(json.getString(PHONE));
+            user.setAdmin(json.getBoolean(IS_ADMIN));
+            user.setRole(json.getString(ROLE));
+            user.setGender(json.getString(GENDER));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        userList.add(user);
+        userAdapter.notifyDataSetChanged();
     }
 
-    private void loadList() {
-        customerList.clear();
-        userList.clear();
+    private void addKhachHangToList(JSONObject json){
+        KhachHang kh = new KhachHang();
         try {
-            for (int i = 0; i < arrayUser.length(); i++) {
-                addUserToList(userList, arrayUser.getJSONObject(i));
-            }
-            for (int i = 0; i < arrayKhachHang.length(); i++) {
-                addUserToList(customerList, arrayKhachHang.getJSONObject(i));
-            }
+            kh.setMakh(json.getString(MA_KH));
+            kh.setTenkh(json.getString(TEN_KH));
+            kh.setDiachi(json.getString(DIA_CHI));
+            kh.setMakv(json.getString(MA_KHU_VUC));
+            kh.setMadk(json.getString(MA_DK));
+            kh.setCmnd(json.getString(CMND));
+            kh.setPhone(json.getString(PHONE));
+            kh.setGioitinh(json.getString(GIOI_TINH));
+            kh.setRole(json.getString(ROLE));
+            kh.setPassword(json.getString(PASSWORD));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        customerList.add(kh);
         customerAdapter.notifyDataSetChanged();
+    }
+
+
+    private void loadUserList(){
+        for (int i = 0; i < arrayUser.length(); i++) {
+            try {
+                addUserToList(arrayUser.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         userAdapter.notifyDataSetChanged();
+    }
+
+    private void loadKhachHangList(){
+        try {
+
+            for (int i = 0; i < arrayKhachHang.length(); i++) {
+                addKhachHangToList(arrayKhachHang.getJSONObject(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        customerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -167,10 +224,12 @@ public class AdminActivity extends AppCompatActivity
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
+                customerList.clear();
+                userList.clear();
                 if (tabId.equalsIgnoreCase(TAB_EMPLOYEE)) {
-                    loadList();
-                } else if (tabId.equalsIgnoreCase(TAB_EMPLOYEE)) {
-                    loadList();
+                    loadUserList();
+                } else if (tabId.equalsIgnoreCase(TAB_CUSTOMER)) {
+                    loadKhachHangList();
                 }
             }
         });
@@ -208,8 +267,7 @@ public class AdminActivity extends AppCompatActivity
                                 if (!txtResetNewPassword.getText().toString().equals("") && txtResetNewPassword.getText().toString().equals(txtResetConfirmPassword.getText().toString())) {
                                     user.setPassword(txtResetConfirmPassword.getText().toString());
                                     UserService.updateUser(user, AdminActivity.this);
-                                    loadList();
-                                } else {
+                                    loadKhachHangList();
                                     Notify.showToast(AdminActivity.this, R.string.password_empty, Notify.SHORT);
                                 }
                             }
@@ -230,7 +288,6 @@ public class AdminActivity extends AppCompatActivity
     @Override
     protected void onPostResume() {
         super.onPostResume();
-
     }
 
     @Override
@@ -262,14 +319,14 @@ public class AdminActivity extends AppCompatActivity
                 customerList.clear();
                 try {
                     for (int i = 0; i < arrayUser.length(); i++) {
-                        if (arrayUser.getJSONObject(i).get("name").toString().toUpperCase().indexOf(newText.toUpperCase()) > -1) {
-                            addUserToList(userList, arrayUser.getJSONObject(i));
+                        if (arrayUser.getJSONObject(i).get(NAME).toString().toUpperCase().indexOf(newText.toUpperCase()) > -1) {
+                            addUserToList(arrayUser.getJSONObject(i));
                         }
                     }
 
                     for (int i = 0; i < arrayKhachHang.length(); i++) {
-                        if ((arrayKhachHang.getJSONObject(i).get("name").toString().toUpperCase().indexOf(newText.toUpperCase()) > -1)) {
-                            addUserToList(customerList, arrayKhachHang.getJSONObject(i));
+                        if ((arrayKhachHang.getJSONObject(i).get(TEN_KH).toString().toUpperCase().indexOf(newText.toUpperCase()) > -1)) {
+                            addUserToList(arrayKhachHang.getJSONObject(i));
                         }
                     }
                     userAdapter.notifyDataSetChanged();
