@@ -1,0 +1,78 @@
+{
+	madk : "DK001",
+	makh : "KH001",
+	mathang: "1",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 500,
+	chisomoi : 520,
+	isthanhtoan : true
+}
+
+{
+	madk : "DK001",
+	makh : "KH001",
+	mathang: "2",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 520,
+	chisomoi : 550,
+	isthanhtoan : true
+}
+
+
+{
+	madk : "DK001",
+	makh : "KH001",
+	mathang: "3",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 550,
+	chisomoi : 580,
+	isthanhtoan : false
+}
+
+
+{
+	madk : "DK002",
+	makh : "KH002",
+	mathang: "1",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 500,
+	chisomoi : 520,
+	isisisthanhtoan : true
+}
+
+{
+	madk : "DK003",
+	makh : "KH003",
+	mathang: "1",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 200,
+	chisomoi : 250,
+	isthanhtoan : true
+}
+
+{
+	madk : "DK004",
+	makh : "KH004",
+	mathang: "1",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 300,
+	chisomoi : 330,
+	isthanhtoan : true
+}
+
+{
+	madk : "DK005",
+	makh : "KH005",
+	mathang: "1",
+	manam: "2015",
+	ngaydksd : "1/1/1990",
+	chisocu: 420,
+	chisomoi : 480,
+	isthanhtoan : true
+}

@@ -1,0 +1,58 @@
+<md-dialog flex="45">
+    <div style="margin: 10px">
+        <div>
+            <h3>Them Khach Hang</h3>
+        </div>
+        <form method="post" layout-fill flex layout="column" action="/addKhachHang">
+            <div>
+                <md-input-container class="md-block">
+                    <label>Ma Khach Khang</label>
+                    <input type="text" name="makh" ng-model="makh" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Ten Khach Hang</label>
+                    <input type="text" ng-model="tenkh" name="tenkh" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Dia Chi</label>
+                    <input type="text" ng-model="diachi" name="diachi" required>
+                </md-input-container>
+
+                <!--<md-input-container class="md-block">-->
+                    <!--<label>Ma Khu Vuc</label>-->
+                    <!--<input type="text" ng-model="makv" name="makv" required>-->
+                <!--</md-input-container>-->
+                <md-select name="favoriteColor" ng-model="favoriteColor">
+                    <md-option>
+                        1
+                    </md-option>
+                </md-select>
+
+                <md-input-container class="md-block">
+                    <label>Ma Dien Ke</label>
+                    <input type="text" name="madk" ng-model="madk" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>CMND</label>
+                    <input type="text" name="cmnd" ng-model="cmnd" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Dien Thoai</label>
+                    <input type="tel" name="phone" ng-model="phone" required>
+                </md-input-container>
+
+                <md-radio-group class="md-block" layout-align="row" name="gioitinh" ng-model="gioitinh">
+                    <md-radio-button value="Nam">Nam</md-radio-button>
+                    <md-radio-button value="Nu">Nu</md-radio-button>
+                </md-radio-group>
+
+                {{gioitinh}}
+                <md-button type="submit">Add</md-button>
+            </div>
+        </form>
+    </div>
+</md-dialog>

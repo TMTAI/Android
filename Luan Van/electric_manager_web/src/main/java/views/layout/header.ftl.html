@@ -1,0 +1,21 @@
+<div layout="row" layout-align="center center" style="background-color: #3b73af; height: 50px">
+    <div layout-fill layout="row" layout-align="start center" style="margin: 5px;">
+        <div layout-align="start center" style="width: 200px">
+            <h2>{{tenKhuVuc}}</h2>
+        </div>
+        <div layout-align="end center" layout="row" layout-fill>
+            <md-button class="md-icon-button" ng-click="showAddKhachHang($events)">
+                <md-tooltip md-direction="bottom">Add Khach Hang</md-tooltip>
+                <md-icon aria-label="" class="material-icons">person_add</md-icon>
+            </md-button>
+            <md-button class="md-icon-button">
+                <md-tooltip md-direction="bottom">Add Thanh Pho</md-tooltip>
+                <md-icon class="material-icons">add_location</md-icon>
+            </md-button>
+            <md-button class="md-icon-button">
+                <md-tooltip md-direction="bottom">Logout</md-tooltip>
+                <md-icon class="material-icons">directions_run</md-icon>
+            </md-button>
+        </div>
+    </div>
+</div>

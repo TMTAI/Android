@@ -1,0 +1,55 @@
+{
+	code: "admin",
+	password: "123456",
+	name : "Tran Minh Tai",
+	birthday : "04/09/1995",
+	address: "210B Ho Van Hue, Phuong 9, Phu Nhuan, TP. HCM",
+	cmnd : "363768742",
+	"phone" : "0898133817",
+	"isAdmin" : true,
+	"role" : "admin",
+	"gender" : "nam",
+	avatar : ""
+}
+
+{
+	code: "nv001",
+	password: "123456",
+	name : "Nguyen Van A",
+	birthday : "04/09/1995",
+	address: "210B Ho Van Hue, Phuong 9, Phu Nhuan, TP. HCM",
+	cmnd : "363768742",
+	"phone" : "0898133817",
+	"isAdmin" : false,
+	"role" : "employee",
+	"gender" : "nam",
+	avatar : ""
+}
+
+{
+	code: "nv002",
+	password: "123456",
+	name : "Nguyen Van B",
+	birthday : "04/09/1995",
+	address: "210B Ho Van Hue, Phuong 9, Phu Nhuan, TP. HCM",
+	cmnd : "363768742",
+	"phone" : "0898133817",
+	"isAdmin" : false,
+	"role" : "employee",
+	"gender" : "nam",
+	avatar : ""
+}
+
+{
+	code: "nv003",
+	password: "123456",
+	name : "Nguyen Van C",
+	birthday : "04/09/1995",
+	address: "210B Ho Van Hue, Phuong 9, Phu Nhuan, TP. HCM",
+	cmnd : "363768742",
+	"phone" : "0898133817",
+	"isAdmin" : false,
+	"role" : "employee",
+	"gender" : "nam",
+	avatar : ""
+}
