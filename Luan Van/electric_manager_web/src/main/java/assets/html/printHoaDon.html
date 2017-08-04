@@ -1,0 +1,79 @@
+<md-dialog flex="45" ng-controller="PrintController">
+    <div style="margin: 10px">
+        <div>
+            <h3>In Hóa Đơn</h3>
+        </div>
+        <form method="post" layout-fill flex layout="column" action="/addDienKe">
+            <md-input-container class="md-block">
+                <label>Mã Hóa Đơn</label>
+                <input type="text" name="hoadon" ng-model="hoadon.mahd" required readonly>
+            </md-input-container>
+
+            <div layout = "row">
+                <md-input-container class="md-block">
+                    <label>Mã Khách Hàng</label>
+                    <input type="text" ng-model="hoadon.makh" name="makh" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Tên Khách Hàng</label>
+                    <input type="text" ng-model="hoadon.tenkh" name="mathang" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Mã Số Thuế</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.mathue" required readonly>
+                </md-input-container>
+
+            </div>
+
+            <md-input-container class="md-block">
+                <label>Địa chỉ</label>
+                <input type="text" ng-model="hoadon.diachi" name="manam" required readonly>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Mã Điện Kế</label>
+                <input type="text" ng-model="hoadon.madk" name="manam" required readonly>
+            </md-input-container>
+
+            <div layout="row">
+                <md-input-container class="md-block">
+                    <label>Chỉ số tiêu thụ (kW/h)</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.tieuthu" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Từ ngày</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.tungay" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Đến ngày</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.denngay" required readonly>
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-input-container class="md-block">
+                    <label>VAT (%)</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.vat" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Thành Tiền (VND)</label>
+                    <input type="text" name="chisocu" ng-model="hoadon.thanhtien" required readonly>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Thanh Toán (VND)</label>
+                    <input type="textg" name="chisocu" ng-model="hoadon.thanhtoan" required readonly>
+                </md-input-container>
+            </div>
+
+            <div layout="row" layout-fill flex>
+                <md-button type="submit">Print</md-button>
+            </div>
+        </form>
+    </div>
+</md-dialog>

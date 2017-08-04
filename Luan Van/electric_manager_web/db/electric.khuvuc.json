@@ -1,0 +1,29 @@
+{
+	tenkv: "Ninh Kieu",
+	makv : "KV01",
+	matp: "TP01"
+}
+
+{
+	tenkv: "Binh Thuy",
+	makv : "KV02",
+	matp: "TP01"
+}
+
+{
+	tenkv: "Co Do",
+	makv : "KV03",
+	matp: "TP01"
+}
+
+{
+	tenkv: "Thoi Lai",
+	makv : "KV04",
+	matp: "TP01"
+}
+
+{
+	tenkv: "Phu Nhuan",
+	makv : "KV05",
+	matp: "TP02"
+}

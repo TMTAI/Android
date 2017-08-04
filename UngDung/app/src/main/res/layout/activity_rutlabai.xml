@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rutlabai"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ctu.tranminhtai.ungdung.Rutlabai">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai11"
+        android:src="#e44545"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai12"
+        android:src="#e44545"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai13"
+        android:src="#e44545"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai21"
+        android:src="#e44545"
+        android:layout_below="@+id/imageViewLaBai11"
+        android:layout_alignLeft="@+id/imageViewLaBai11"
+        android:layout_alignStart="@+id/imageViewLaBai11"
+        android:layout_marginTop="22dp" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai22"
+        android:src="#e44545"
+        android:layout_alignTop="@+id/imageViewLaBai21"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:id="@+id/imageViewLaBai23"
+        android:src="#e44545"
+        android:layout_alignTop="@+id/imageViewLaBai22"
+        android:layout_alignLeft="@+id/imageViewLaBai13"
+        android:layout_alignStart="@+id/imageViewLaBai13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hướng Dẫn"
+        android:id="@+id/textViewHuongDan"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/buttonPlay"
+        android:layout_marginTop="40dp"
+        android:background="#04f710"
+        android:layout_below="@+id/imageViewLaBai22"
+        android:layout_alignLeft="@+id/imageViewLaBai22"
+        android:layout_alignStart="@+id/imageViewLaBai22" />
+
+</RelativeLayout>

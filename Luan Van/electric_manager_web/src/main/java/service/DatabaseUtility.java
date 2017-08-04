@@ -1,0 +1,14 @@
+package service;
+
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+/**
+ * Created by tmtai on 7/10/2017.
+ */
+public class DatabaseUtility {
+    protected static MongoClient mongoClient = new MongoClient("localhost",27017);
+    protected static MongoDatabase db = mongoClient.getDatabase("electric");
+
+}

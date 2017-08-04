@@ -1,0 +1,244 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Home page">
+    <body ng-app="myApp">
+    <div layout="column" layout-fill style="max-height: 100%" ng-controller="HomeCtrl">
+        <!--<md-progress-linear md-mode="determinate" style="background-color: #9E9E9E"></md-progress-linear>-->
+        <div layout-fill id="index">
+            <div style="height: 890px" flex layout="row" layout-align="start start" class="md-block">
+                <!-- Container left -->
+                <div id="left" flex="15" layout="row" layout-fill>
+                    <md-sidenav
+                            class="md-sidenav-left"
+                            md-component-id="left"
+                            md-is-locked-open="$mdMedia('gt-md')"
+                            md-whiteframe="5">
+                        <md-list flex laout="row" layout-fill>
+                            <md-list-item ng-repeat="tp in thanhpho" layout="row" flex
+                            ">
+                            <div layout="column">
+                                <h4>{{tp.tentp}}</h4>
+                                <md-list layout="column">
+                                    <md-list-item ng-repeat="kv in khuvuc" layout="row" ng-click="khuVucItemClick(kv)"
+                                                  ng-hide="hiden">
+                                        <h5>
+                                            {{kv.matp == tp.matp ? kv.tenkv : hiden = true}}
+                                        </h5>
+                                    </md-list-item>
+                                </md-list>
+                            </div>
+                            </md-list-item>
+                        </md-list>
+
+                    </md-sidenav>
+                </div>
+
+                <!-- Container right -->
+                <div id="right" flex="85" layout-padding class="my-padding" flex layout-fill
+                     style="height: 100%; width: 100%">
+
+                    <div>
+                        <md-card class="gadget" md-whiteframe="8">
+                            <div layout="row" layout-align="start center">
+                                <h4>Danh Sach Khach Hang</h4>
+
+                                <div layout="row" layout-align="end center" flex>
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="bottom">Update</md-tooltip>
+                                        <md-icon aria-label="" class="material-icons">refresh</md-icon>
+                                    </md-button>
+
+                                    <md-button class="md-icon-button" ng-click="hide=!hide">
+                                        <md-tooltip md-direction="bottom">Toogke View</md-tooltip>
+                                        <md-icon ng-if="!hide" aria-label="" class="material-icons">keyboard_arrow_up
+                                        </md-icon>
+                                        <md-icon ng-if="hide" aria-label="" class="material-icons">keyboard_arrow_down
+                                        </md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                            <table class="responstable" style="width: 100%" ng-hide="hidenTableKhachHang">
+                                <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>MÃ KHÁCH HÀNG</th>
+                                    <th>TÊN KHÁCH HÀNG</th>
+                                    <th>ĐỊA CHỈ</th>
+                                    <th>KHU VỰC</th>
+                                    <th>CMND</th>
+                                    <th>GIỚI TÍNH</th>
+                                    <th>ĐIỆN THOẠI</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="kh in listKhachHang">
+                                <tr ng-click="showInfoDienKe(kh)">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{kh.makh}}</td>
+                                    <td style="text-align: left">{{kh.tenkh}}</td>
+                                    <td style="text-align: left">{{kh.diachi}}</td>
+                                    <td>{{tenKhuVuc}}</td>
+                                    <td>{{kh.cmnd}}</td>
+                                    <td>{{kh.gioitinh}}</td>
+                                    <td>{{kh.phone}}</td>
+                                    <td layout="row" layout-align="center center">
+                                        <md-button class="md-icon-button" ng-click="editKhachHang(kh)">
+                                            <md-tooltip md-direction="bottom">Edit</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">edit</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button" ng-click="deleteKhachHang(kh)">
+                                            <md-tooltip md-direction="bottom">Delete</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">delete</md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card>
+                    </div>
+
+                    <!-- CHI TIET DIEN KE-->
+                    <div>
+                        <md-card class="gadget" md-whiteframe="8">
+                            <div layout="row" layout-align="start center">
+                                <div layout="row" layout-align="start center" flex>
+                                    <h4>Thong Ke Dien Ke</h4>
+
+                                    <div layout="row" layout-align="end center" flex>
+                                        <md-button class="md-icon-button" ng-click="showAddDienKe($event, kh)"
+                                        ng-if="selectKhachHang != null">
+                                            <md-tooltip md-direction="bottom">Add Dien Ke</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">add</md-icon>
+                                        </md-button>
+
+                                        <md-button class="md-icon-button">
+                                            <md-tooltip md-direction="bottom">Update</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">refresh</md-icon>
+                                        </md-button>
+
+                                        <md-button class="md-icon-button" ng-click="hidenTableDienKe=!hidenTableDienKe">
+                                            <md-tooltip md-direction="bottom">Toogke View</md-tooltip>
+                                            <md-icon ng-if="!hidenTableDienKe" aria-label="" class="material-icons">
+                                                keyboard_arrow_up
+                                            </md-icon>
+                                            <md-icon ng-if="hidenTableDienKe" aria-label="" class="material-icons">
+                                                keyboard_arrow_down
+                                            </md-icon>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="responstable" style="width: 100%" ng-hide="hidenTableDienKe">
+                                <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>MÃ ĐIỆN KẾ</th>
+                                    <th>MÃ KHÁCH HÀNG</th>
+                                    <th>THÁNG</th>
+                                    <th>NĂM</th>
+                                    <th>CHỈ SỐ CŨ</th>
+                                    <th>CHỈ SỐ MỚI</th>
+                                    <th>THANH TOÁN</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="dk in listDienKe">
+                                <tr ng-click="showInfoHoaDon(dk)" style="height: 5px">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{dk.madk}}</td>
+                                    <td>{{dk.makh}}</td>
+                                    <td>{{dk.mathang}}</td>
+                                    <td>{{dk.manam}}</td>
+                                    <td>{{dk.chisocu}}</td>
+                                    <td>
+                                        <input type="number" ng-model=dk.chisomoi style="width: 100px" flex>
+                                    </td>
+                                    <td style="padding-top: 10px">
+                                        <md-checkbox ng-model="dk.isthanhtoan" ng-click="clickThanhToan(dk)"></md-checkbox>
+                                    </td>
+                                    <td layout="row">
+                                        <md-button class="md-icon-button" ng-click="updateChiSoDien(dk)">
+                                            <md-tooltip md-direction="bottom">Update</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">refresh</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button" ng-click="deleteKhachHang(dk)">
+                                            <md-tooltip md-direction="bottom">Delete</md-tooltip>
+                                            <md-icon aria-label="" class="material-icons">delete</md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card>
+                    </div>
+
+                    <!-- CHI TIET HOA DON-->
+                    <div>
+                        <md-card class="gadget" md-whiteframe="8">
+                            <div layout="row" layout-align="start center">
+                                <h4>Chi Tiet Hoa Don</h4>
+
+                                <div layout="row" layout-align="end center" flex>
+                                    <md-button class="md-icon-button" ng-click="showPrintHoaDon($event, hoadon)">
+                                        <md-tooltip md-direction="bottom">In Hóa Đơn</md-tooltip>
+                                        <md-icon aria-label="" class="material-icons">print</md-icon>
+                                    </md-button>
+
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="bottom">Update</md-tooltip>
+                                        <md-icon aria-label="" class="material-icons">refresh</md-icon>
+                                    </md-button>
+
+                                    <md-button class="md-icon-button" ng-click="hidenHoaDon=!hidenHoaDon">
+                                        <md-tooltip md-direction="bottom">Toogke View</md-tooltip>
+                                        <md-icon ng-if="!hidenTableDienKe" aria-label="" class="material-icons">
+                                            keyboard_arrow_up
+                                        </md-icon>
+                                        <md-icon ng-if="hidenTableDienKe" aria-label="" class="material-icons">
+                                            keyboard_arrow_down
+                                        </md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                            <table class="responstable" style="width: 100%" ng-hide="hidenTableHoaDon">
+                                <thead>
+                                <th>MÃ HÓA ĐƠN</th>
+                                <th>MÃ KHÁCH HÀNG</th>
+                                <th>TÊN KHÁCH HÀNG</th>
+                                <th>ĐỊA CHỈ</th>
+                                <th>MÃ ĐIỆN KẾ</th>
+                                <th>CHỈ SỐ ĐIỆN TIÊU THỤ</th>
+                                <th>TỪ NGÀY</th>
+                                <th>ĐẾN NGÀY</th>
+                                <th>VAT</th>
+                                <th>MÃ SỐ THUẾ</th>
+                                <th>THÀNH TIÊN</th>
+                                <th>PHẢI THANH TOÁN (ĐÃ TÍNH VAT)</th>
+                                </thead>
+                                <tbody>
+                                <tr ng-style="hoadon.isthanhtoan == false && {color: 'red'}">
+                                    <td>{{hoadon.mahd}}</td>
+                                    <td>{{hoadon.makh}}</td>
+                                    <td style="text-align: left">{{hoadon.tenkh}}</td>
+                                    <td style="text-align: left">{{hoadon.diachi}}</td>
+                                    <td>{{hoadon.madk}}</td>
+                                    <td>{{hoadon.tieuthu}}</td>
+                                    <td>{{hoadon.tungay}}</td>
+                                    <td>{{hoadon.denngay}}</td>
+                                    <td>
+                                        {{hoadon.vat}}
+                                        <span ng-if="hoadon.vat >=0 ">%</span>
+                                    </td>
+                                    <td>{{hoadon.mathue}}</td>
+                                    <td>{{hoadon.thanhtien | currency: 'VND ' : 0}}</td>
+                                    <td>{{hoadon.thanhtoan | currency: 'VND ' : 0}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</@layout.myLayout>
