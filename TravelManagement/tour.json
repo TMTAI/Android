@@ -1,0 +1,80 @@
+{
+	"time_start": "21h30",
+	"date" : "31/01/2016",
+	"action" : "Tap trung len xe",
+	"location" : "Nha Van Hoa Phu Nhuan",
+	"destination" : "Dia diem A",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "22h"
+}
+
+{
+	"time_start": "6h",
+	"date" : "01/02/2016",
+	"action" : "An sang",
+	"location" : "Dia Diem A",
+	"destination" : "Dia Diem A",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "7h30"
+}
+
+{
+	"time_start": "8h",
+	"date" : "01/02/2016",
+	"action" : "Tham quan dia diem X, Y, Z",
+	"location" : "dia diem X",
+	"destination" : "dia diem Z",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "11h"
+}
+
+{
+	"time_start": "11h15",
+	"date" : "01/02/2016",
+	"action" : "Ve Khach San T, nhan chia khoa phong, nghi ngoi",
+	"location" : "Dia Diem Z",
+	"destination" : "Khach San T",
+	"instructor" : "Nguyen Van A",
+	"time_end" : ""
+}
+
+{
+	"time_start": "11h20",
+	"date" : "01/02/2016",
+	"action" : "ve phong nghi ngoi",
+	"location" : "Khach San T",
+	"destination" : "Khach San T",
+	"instructor" : "Nguyen Van A",
+	"time_end" : ""
+}
+
+{
+	"time_start": "15h",
+	"date" : "01/02/2016",
+	"action" : "vui choi bai bien",
+	"location" : "Khach San T",
+	"destination" : "Khach San T",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "18h"
+}
+
+{
+	"time_start": "18h30",
+	"date" : "01/02/2016",
+	"action" : "an toi",
+	"location" : "Khach San T",
+	"destination" : "Khach San T",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "20h"
+}
+
+{
+	"time_start": "20h30",
+	"date" : "01/02/2016",
+	"action" : "Hoa dong buoi toi, lua trai",
+	"location" : "Khach San T",
+	"destination" : "Khach San T",
+	"instructor" : "Nguyen Van A",
+	"time_end" : "23h"
+}
+
