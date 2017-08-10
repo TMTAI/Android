@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -25,12 +24,10 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -64,8 +61,6 @@ import static ctu.tmtai.com.util.Constant.NAME;
 import static ctu.tmtai.com.util.Constant.PASSWORD;
 import static ctu.tmtai.com.util.Constant.PHONE;
 import static ctu.tmtai.com.util.Constant.ROLE;
-import static ctu.tmtai.com.util.Constant.ROLE_CUSTOMER;
-import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
 import static ctu.tmtai.com.util.Constant.TAB_CUSTOMER;
 import static ctu.tmtai.com.util.Constant.TAB_EMPLOYEE;
 import static ctu.tmtai.com.util.Constant.TEN_KH;
@@ -91,6 +86,7 @@ public class AdminActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         task.execute();
+
         // Hiển thị màn hình chờ khi hệ thống load dữ liệu
         progressDialog = new MyProgressDialog(this);
         progressDialog.showProgressBar();
@@ -267,6 +263,8 @@ public class AdminActivity extends AppCompatActivity
                                 if (!txtResetNewPassword.getText().toString().equals("") && txtResetNewPassword.getText().toString().equals(txtResetConfirmPassword.getText().toString())) {
                                     user.setPassword(txtResetConfirmPassword.getText().toString());
                                     UserService.updateUser(user, AdminActivity.this);
+
+
                                     loadKhachHangList();
                                     Notify.showToast(AdminActivity.this, R.string.password_empty, Notify.SHORT);
                                 }
@@ -390,7 +388,7 @@ public class AdminActivity extends AppCompatActivity
     }
 
     // Lớp xử lý đa tiến trình:
-    public class MyJsonTask extends AsyncTask<Object, Object, Void> {
+    public class MyJsonTask extends AsyncTask<String, Object, Void> {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -398,7 +396,7 @@ public class AdminActivity extends AppCompatActivity
         }
 
         @Override
-        protected Void doInBackground(Object... params) {
+        protected Void doInBackground(String... params) {
             try {
                 Document documentKhachHang = Jsoup.connect(HTTP_ALL_KHACH_HANG).get();
                 String strAllKhachHang = documentKhachHang.body().text();
