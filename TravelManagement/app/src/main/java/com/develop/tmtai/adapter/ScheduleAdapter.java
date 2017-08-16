@@ -40,7 +40,18 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         Schedule schedule = this.objects.get(position);
         if (schedule != null){
             TextView txtItemTime = (TextView) view.findViewById(R.id.txtItemTime);
+            TextView txtItemDate = (TextView) view.findViewById(R.id.txtItemDate);
+            TextView txtItemTimeEnd = (TextView) view.findViewById(R.id.txtItemTimeEnd);
+            TextView txtItemAction = (TextView) view.findViewById(R.id.txtItemAction);
+            TextView txtItemLocation = (TextView) view.findViewById(R.id.txtItemLocation);
+            TextView txtItemDestination = (TextView) view.findViewById(R.id.txtItemDestination);
+            txtItemDestination.setText(schedule.getDestination());
+            txtItemLocation.setText(schedule.getLocation());
+            txtItemAction.setText(schedule.getAction());
             txtItemTime.setText(schedule.getTimeStart());
+            txtItemDate.setText(schedule.getDate());
+            txtItemTimeEnd.setText(schedule.getTimeEnd());
+
         }
         return view;
     }

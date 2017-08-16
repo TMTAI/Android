@@ -1,19 +1,27 @@
 package com.develop.tmtai.adapter;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.develop.tmtai.models.Schedule;
+import com.develop.tmtai.services.InternetConectionUtil;
 import com.develop.tmtai.travelmanagement.FragmentHistoryTravel;
 import com.develop.tmtai.travelmanagement.FragmentInfoTravel;
 import com.develop.tmtai.travelmanagement.FragmentSchedule;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tmtai on 8/10/2017.
  */
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -27,9 +35,8 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 return new FragmentInfoTravel();
             case 2: // Fragment # 1 - This will show SecondFragment
                 return new FragmentHistoryTravel();
-            default:
-                return null;
         }
+        return null;
     }
 
     @Override
