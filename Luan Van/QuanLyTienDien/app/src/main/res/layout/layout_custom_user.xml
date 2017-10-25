@@ -7,7 +7,7 @@
         android:id="@+id/txtItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:paddingLeft="0dp"
         android:text="@string/name"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="18sp"
@@ -17,7 +17,7 @@
         android:id="@+id/txtItemCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
+        android:paddingLeft="5dp"
         android:text="@string/Code"
         android:textColor="@android:color/holo_purple"
         android:textSize="16sp"
@@ -27,7 +27,7 @@
         android:id="@+id/txtItemPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
+        android:paddingLeft="5dp"
         android:text="@string/phone" />
 
     <TextView

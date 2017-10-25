@@ -7,6 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ctu.tmtai.com.quanlytiendien.AdminActivity"
     tools:showIn="@layout/app_bar_admin">
+
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
@@ -47,7 +48,8 @@
                     <ListView
                         android:id="@+id/lvEmployee"
                         android:layout_width="match_parent"
-                        android:layout_height="458dp" />
+                        android:layout_height="match_parent"
+                        android:padding="10dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -59,7 +61,8 @@
                     <ListView
                         android:id="@+id/lvCustomer"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:padding="10dp" />
                 </LinearLayout>
 
             </FrameLayout>

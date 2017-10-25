@@ -1,14 +1,28 @@
 package ctu.tmtai.com.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.sql.Blob;
 
+import static ctu.tmtai.com.util.Constant.ADDRESS;
+import static ctu.tmtai.com.util.Constant.BIRTH_DAY;
+import static ctu.tmtai.com.util.Constant.CMND;
+import static ctu.tmtai.com.util.Constant.CODE;
+import static ctu.tmtai.com.util.Constant.GENDER;
+import static ctu.tmtai.com.util.Constant.IS_ADMIN;
+import static ctu.tmtai.com.util.Constant.NAME;
+import static ctu.tmtai.com.util.Constant.PASSWORD;
+import static ctu.tmtai.com.util.Constant.PHONE;
+import static ctu.tmtai.com.util.Constant.ROLE;
 import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
 
 /**
  * Created by tranm on 10-Jul-17.
  */
 
-public class User {
+public class User implements Serializable{
     private String code;
     private String password;
     private String name;
@@ -49,17 +63,35 @@ public class User {
         this.avatar = avatar;
     }
 
-    public User(String code, String password, String name, String birthday, String address, String gender, String cmnd, String phone, boolean isAdmin, String role) {
+    public User(String code, String password, String name, String birthday, String address, String cmnd, String phone, boolean isAdmin, String gender, String role) {
         this.code = code;
         this.password = password;
         this.name = name;
         this.birthday = birthday;
         this.address = address;
-        this.gender = gender;
         this.cmnd = cmnd;
         this.phone = phone;
         this.isAdmin = isAdmin;
+        this.gender = gender;
         this.role = role;
+    }
+
+    public User(JSONObject json){
+        try {
+            this.code = json.getString(CODE);
+            this.password =  json.getString(PASSWORD);
+            this.name =  json.getString(NAME);
+            this.birthday =  json.getString(BIRTH_DAY);
+            this.address =  json.getString(ADDRESS);
+            this.cmnd =  json.getString(CMND);
+            this.phone =  json.getString(PHONE);
+            this.isAdmin =  json.getBoolean(IS_ADMIN);
+            this.role = json.getString(ROLE);
+            this.gender =  json.getString(GENDER);
+            this.avatar =  null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getCode() {
@@ -148,5 +180,12 @@ public class User {
 
     public void setAvatar(Blob avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isEmpty() {
+        if (this.code.equals("")) {
+            return true;
+        }
+        return false;
     }
 }

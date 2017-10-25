@@ -1,12 +1,28 @@
 package ctu.tmtai.com.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.sql.Blob;
+
+import static ctu.tmtai.com.util.Constant.CMND;
+import static ctu.tmtai.com.util.Constant.DIA_CHI;
+import static ctu.tmtai.com.util.Constant.GIOI_TINH;
+import static ctu.tmtai.com.util.Constant.MA_DK;
+import static ctu.tmtai.com.util.Constant.MA_KH;
+import static ctu.tmtai.com.util.Constant.MA_KHU_VUC;
+import static ctu.tmtai.com.util.Constant.NGAY_SINH;
+import static ctu.tmtai.com.util.Constant.PASSWORD;
+import static ctu.tmtai.com.util.Constant.PHONE;
+import static ctu.tmtai.com.util.Constant.ROLE;
+import static ctu.tmtai.com.util.Constant.TEN_KH;
 
 /**
  * Created by tranm on 30-Jul-17.
  */
 
-public class KhachHang {
+public class KhachHang implements Serializable{
     private String makh;
     private String tenkh;
     private String diachi;
@@ -50,6 +66,24 @@ public class KhachHang {
         this.ngaysinh = ngaysinh;
     }
 
+    public KhachHang(JSONObject json){
+        try {
+            this.makh = json.getString(MA_KH);
+            this.tenkh = json.getString(TEN_KH);
+            this.diachi = json.getString(DIA_CHI);
+            this.makv=json.getString(MA_KHU_VUC);
+            this.madk= json.getString(MA_DK);
+            this.cmnd= json.getString(CMND);
+            this.phone= json.getString(PHONE);
+            this.gioitinh= json.getString(GIOI_TINH);
+            this.role= json.getString(ROLE);
+            this.password= json.getString(PASSWORD);
+            this.ngaysinh = json.getString(NGAY_SINH);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
     public String getMakh() {
         return makh;
     }
@@ -144,5 +178,12 @@ public class KhachHang {
 
     public void setNgaysinh(String ngaysinh) {
         this.ngaysinh = ngaysinh;
+    }
+
+    public boolean isEmpty() {
+        if (this.makh.equals("")) {
+            return true;
+        }
+        return false;
     }
 }

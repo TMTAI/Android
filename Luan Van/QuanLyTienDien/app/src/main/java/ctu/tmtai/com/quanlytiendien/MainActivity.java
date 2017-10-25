@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,21 +18,25 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import ctu.tmtai.com.api.ApiApp;
+import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.notify.Notify;
-import ctu.tmtai.com.util.JSONReader;
+import ctu.tmtai.com.util.InternetConnectionUtil;
 
 import static ctu.tmtai.com.util.Constant.*;
 
 public class MainActivity extends AppCompatActivity implements ApiApp {
 
-    EditText txtUserName, txtPassword;
-    CheckBox chkRemember;
-    Button btnLogin;
-
-    private JSONArray jsonArray;
+    private EditText txtUserName, txtPassword;
+    private CheckBox chkRemember;
+    private Button btnLogin;
+    private List<User> userList;
+    private List<KhachHang> khachHangList;
     public static SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
@@ -42,22 +45,38 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        new MyJsonTask().execute();
+
         addControls();
         addEvents();
 
         logined();
     }
 
+    public void addControls() {
+        userList = new ArrayList<>();
+        khachHangList = new ArrayList<>();
+
+        preferences = getPreferences(Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        txtUserName = (EditText) findViewById(R.id.txtUserName);
+        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        chkRemember = (CheckBox) findViewById(R.id.chkRemember);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+    }
+
+
     private void logined() {
-        if (preferences.getBoolean(LOGINED,false) == true){
-            if (preferences.getBoolean(IS_ADMIN, false) == true){
+        if (preferences.getBoolean(LOGINED, false) == true) {
+            if (preferences.getBoolean(IS_ADMIN, false) == true) {
                 Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
                 startActivity(intent);
-            }else{
-                if (preferences.getString(ROLE, NULL).equals(ROLE_CUSTOMER)){
+            } else {
+                if (preferences.getString(ROLE, NULL).equals(ROLE_CUSTOMER)) {
                     Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
                     startActivity(intent);
-                }else if (preferences.getString(ROLE, NULL).equals(ROLE_EMPLOYEE)){
+                } else if (preferences.getString(ROLE, NULL).equals(ROLE_EMPLOYEE)) {
                     Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                     startActivity(intent);
                 }
@@ -69,69 +88,69 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkEmpty()) {
-                    if (chkRemember.isChecked()) {
-                        doLogin(txtUserName.getText().toString(), txtPassword.getText().toString(), true);
-                    } else if (!chkRemember.isChecked()) {
-                        doLogin(txtUserName.getText().toString(), txtPassword.getText().toString(), false);
-                    }
+                new MyJsonTask().execute();
+
+                if (userList == null) {
+                    Notify.showToast(getApplicationContext(), R.string.server_connect_error, Notify.LONG);
                 } else {
-                    Notify.showToast(getApplicationContext(), R.string.user_password_empty, Notify.SHORT);
+                    if (!checkEmpty()) {
+                        if (chkRemember.isChecked()) {
+                            doLogin(txtUserName.getText().toString(), txtPassword.getText().toString(), true);
+                        } else if (!chkRemember.isChecked()) {
+                            doLogin(txtUserName.getText().toString(), txtPassword.getText().toString(), false);
+                        }
+                    } else {
+                        Notify.showToast(getApplicationContext(), R.string.user_password_empty, Notify.SHORT);
+                    }
                 }
+
             }
         });
+    }
+
+    private void createBundle(Object ob, Intent intent) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER, (Serializable) ob);
+        intent.putExtra(BUNDLE_USER, bundle);
     }
 
     private void doLogin(String username, String password, boolean remmember) {
         editor.putString(USERNAME, username);
         editor.putString(PASSWORD, password);
         Boolean checkLogin = false;
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                if (jsonArray.getJSONObject(i).getString(CODE).equals(username) &&
-                        jsonArray.getJSONObject(i).getString(PASSWORD).equals(password)) {
-                    if (remmember){
-                        editor.putBoolean(LOGINED, true);
-                    }
-                    checkLogin = true;
-                    if (jsonArray.getJSONObject(i).getBoolean(IS_ADMIN)) {
-                        editor.putString(ROLE, ROLE_ADMIN);
-                        editor.putBoolean(IS_ADMIN, true);
-                        Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                        startActivity(intent);
-                    } else {
-                        editor.putBoolean(IS_ADMIN, false);
-                        if (jsonArray.getJSONObject(i).getString(ROLE).equals(ROLE_EMPLOYEE)) {
-                            editor.putString(ROLE, ROLE_EMPLOYEE);
-                            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                            startActivity(intent);
-                        } else {
-                            editor.putString(ROLE, ROLE_CUSTOMER);
-                            Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                    break;
+        Intent intent = null;
+        for (User user : userList) {
+            if (user.getCode().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
+                checkLogin = true;
+                if (remmember) {
+                    editor.putBoolean(LOGINED, checkLogin);
                 }
+                if (user.isAdmin()){
+                    intent = new Intent(getApplicationContext(), AdminActivity.class);
+                }else{
+                    intent = new Intent(getApplicationContext(), UserActivity.class);
+                }
+                createBundle(user, intent);
+                startActivity(intent);
+                finish();
             }
-            editor.commit();
-            if (!checkLogin) {
-                Notify.showToast(this, R.string.user_password_invalid, Notify.SHORT);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-    }
 
-    public void addControls() {
-        preferences = getPreferences(Context.MODE_PRIVATE);
-        editor = preferences.edit();
-        txtUserName = (EditText) findViewById(R.id.txtUserName);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
-        chkRemember = (CheckBox) findViewById(R.id.chkRemember);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-
-
+        for (KhachHang khachHang : khachHangList) {
+            if (khachHang.getMakh().equalsIgnoreCase(username) && khachHang.getPassword().equals(password)) {
+                checkLogin = true;
+                if (remmember) {
+                    editor.putBoolean(LOGINED, checkLogin);
+                }
+                intent = new Intent(getApplicationContext(), AdminActivity.class);
+                createBundle(khachHang, intent);
+                startActivity(intent);
+                finish();
+            }
+        }
+        if (!checkLogin) {
+            Notify.showToast(this, R.string.user_password_invalid, Notify.SHORT);
+        }
     }
 
     private boolean checkEmpty() {
@@ -148,50 +167,23 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        new MyJsonTask().execute();
     }
 
     // Lớp xử lý đa tiến trình:
     public class MyJsonTask extends AsyncTask<String, JSONObject, Void> {
         @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-        }
-
-        @Override
         protected Void doInBackground(String... params) {
             try {
-                Document document = Jsoup.connect(HTTP_ALL_USER).get();
-                String str  = document.body().text();
-                // đọc và chuyển về JSONObject
-                jsonArray = new JSONArray(str);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                JSONArray jsonArray = InternetConnectionUtil.getInstance().getJSONArrayFromServer(HTTP_ALL_USER);
+                userList = InternetConnectionUtil.getInstance().getListUserFromJSONArray(jsonArray);
+
+                JSONArray jsonCustomer = InternetConnectionUtil.getInstance().getJSONArrayFromServer(HTTP_ALL_KHACH_HANG);
+                khachHangList = InternetConnectionUtil.getInstance().getListKhachHangFromJSONArray(jsonCustomer);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(JSONObject... values) {
-            super.onProgressUpdate(values);
-            // ta cập nhật giao diện ở đây:
-            JSONObject jsonObj = values[0];
-            try {
-                // kiểm tra xem có tồn tại thuộc tính id hay không
-                    txtUserName.setText(jsonObj.getString("code"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
         }
     }
 }

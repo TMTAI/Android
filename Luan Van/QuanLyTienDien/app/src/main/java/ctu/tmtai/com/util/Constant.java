@@ -5,55 +5,76 @@ package ctu.tmtai.com.util;
  */
 
 public class Constant {
+    public static String USER = "user";
+    public static String JSON_USER = "json_user";
+    public static String BUNDLE_USER = "bundle_user";
+
     public static String USERNAME = "username";
     public static String LOGINED = "logined";
     public static String ALL_DATA_USER_LOGIN = "allDataUserLogin";
     public static String REMEMBER_ME = "rememberMe";
-
+    public static String ERROR = "ERROR";
     public static String ROLE_ADMIN = "admin";
     public static String ROLE_CUSTOMER = "customer";
     public static String ROLE_EMPLOYEE = "employee";
-
+    public static String NEW_PASS = "newpass";
+    public static String OLD_PASS = "oldpass";
+    public static String CONFIRM_PASS = "confirmpass";
     public static String NULL = "null";
+    public static String NGAY_SINH = "ngaysinh";
+    public static String GENDER_MALE = "nam";
+    public static String GENDER_FEMALE = "nu";
+
 
     //web service
     public static String HTTP = "http://";
-    public static String HOST = "192.168.0.108";
+    public static String HOST = "192.168.1.14";
     public static String PORT = ":8888/";
     public static String URL = HTTP + HOST + PORT;
+
+    public static String HTTP_GET_USER = URL + "getUser";
     public static String HTTP_ALL_USER = URL + "getAllUsers";
-    public static String HTTP_ALL_KHACH_HANG = URL + "getAllKhachHang";
-    public static String HTTP_CODE_USER = URL+ "rest/users/code/";
-    public static String HTTP_ADD_USER = URL + "rest/user/add/";
-    public static String HTTP_UPDATE_USER = URL + "rest/user/update/";
+    public static String HTTP_NEW_PASSWORD = URL + "newPassword%s";
     public static String HTTP_ALL_KHU_VUC = URL + "getKhuVuc";
+    public static String HTTP_UPDATE_USER = URL + "update%s";
+    public static String HTTP_ADD = URL + "add%s";
+    public static String HTTP_DELETE = URL + "delete%s";
+
+
+    public static String HTTP_GET_KHACH_HANG = URL + "getKhachHang";
+    public static String HTTP_ALL_KHACH_HANG = URL + "getAllKhachHang";
+    public static String HTTP_ALL_KHACH_HANG_THEO_KHU_VUC = URL + "getListKhachHang";
+
+    public static String HTTP_GET_DIEN_KE_BY_MA_KH = URL + "getDienKe";
+    public static String HTTP_GET_DIEN_KE_BY_MA_NAM = URL + "getDienKeByNam";
+    public static String HTTP_UPDATE_CHI_SO_DIEN_KE = URL + "updateChiSoDienKe";
+
+    public static String HTTP_GET_THANG = URL + "getThang";
+    public static String HTTP_GET_NAM = URL + "getNam";
+
+    public static String HTTP_GET_LOCATION = "https://maps.googleapis.com/maps/api/geocode/json?&address=%s";
 
     //
     public static String TAB_EMPLOYEE = "tabEmployee";
     public static String TAB_CUSTOMER = "tabCustomer";
-
-
 
     public static String ID = "id";
     public static String MA_KH = "makh";
     public static String TEN_KH = "tenkh";
     public static String DIA_CHI = "diachi";
     public static String ID_KHU_VUC = "id_khuvuc";
-    public static String ID_DIEN_KE = "id_dienke";
     public static String CMND = "cmnd";
     public static String PHONE = "phone";
     public static String GIOI_TINH = "gioitinh";
 
     public static String TEN_TINH_TP = "tentp";
     public static String TEN_KHU_VUC = "tenkv";
-    public static String ID_THANH_PHO = "id_thanhpho";
     public static String MA_THANH_PHO = "matp";
     public static String MA_KHU_VUC = "makv";
+    public static String KHU_VUC = "khuvuc";
+    public static String BUNDLE_KHU_VUC = "khuvuc";
 
     public static String MA_DK = "madk";
-    public static String ID_KH = "id_kh";
-    public static String ID_THANG = "id_thang";
-    public static String ID_NAM = "id_nam";
     public static String NGAY_DANG_KY= "ngaydksd";
     public static String CHI_SO_CU= "chisocu";
     public static String MA_THANG= "mathang";
@@ -77,11 +98,13 @@ public class Constant {
     public static String BIRTH_DAY = "birthday";
     public static String GENDER = "gender";
     public static String NAME = "name";
-    public static String HOA_DON = "HD";
+    public static String NAM = "nam";
+    public static String NU = "nu";
 
 
     //Hoa Don
     public static String MA_HD = "mahd";
+    public static String HOA_DON = "HD";
 
     //Database
     public static String MONGO_ID = "_id";

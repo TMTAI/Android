@@ -8,6 +8,11 @@
     <string name="remember">Remember login</string>
     <string name="employee">Employee</string>
     <string name="customer">Customer</string>
+    <string name="ep">EP</string>
+    <string name="cs">CS</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <!-- Info Employee-->
     <string name="name">Name</string>
@@ -35,7 +40,12 @@
     <string name="Update_error">Update Error</string>
     <string name="Delete_error">Delete Error</string>
     <string name="update_susscess">Update Success</string>
+    <string name="user_exist">User Exist</string>
 
+    <string name="number_home">Number home</string>
+    <string name="district">District</string>
+    <string name="city">City</string>
+    <string name="list_customer_of">List Customer of </string>
     <!--String-->
     <string name="Title_Add_User">Add New User</string>
     <string name="Title_Update_Infomation">Update Infomation</string>
@@ -46,6 +56,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="change_password">Change Password</string>
     <string name="change_susscess">Change Password Susscess</string>
+    <string name="confirm_password_error">Confirm password incorrect</string>
     <string name="change_fail">Change Password Fail</string>
     <string name="edit_infomation">Edit Infomation</string>
     <string name="logout">Logout</string>
@@ -65,4 +76,11 @@
     <string name="title_activity_user">UserActivity</string>
     <string name="title_activity_admin">AdminActivity</string>
     <string name="title_activity_customer">CustomerActivity</string>
+
+    <string name="old_number">Old Number</string>
+    <string name="new_number">New Number</string>
+    <string name="pay">Pay</string>
+
+    <!--Server-->
+    <string name="server_connect_error">Server Connect Error</string>
 </resources>

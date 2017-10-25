@@ -1,37 +1,46 @@
 package ctu.tmtai.com.quanlytiendien;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 import ctu.tmtai.com.api.ApiApp;
+import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.notify.Notify;
-import ctu.tmtai.com.service.UserService;
 
-import static ctu.tmtai.com.util.Constant.HTTP_CODE_USER;
-import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
+import static ctu.tmtai.com.util.Constant.BUNDLE_USER;
+import static ctu.tmtai.com.util.Constant.CODE;
+import static ctu.tmtai.com.util.Constant.HTTP_GET_USER;
+import static ctu.tmtai.com.util.Constant.HTTP_NEW_PASSWORD;
+import static ctu.tmtai.com.util.Constant.MA_KH;
+import static ctu.tmtai.com.util.Constant.NEW_PASS;
+import static ctu.tmtai.com.util.Constant.ROLE;
+import static ctu.tmtai.com.util.Constant.ROLE_ADMIN;
+import static ctu.tmtai.com.util.Constant.ROLE_CUSTOMER;
+import static ctu.tmtai.com.util.Constant.USER;
 import static ctu.tmtai.com.util.Constant.USERNAME;
 
 public class ResetPasswordActivity extends AppCompatActivity implements ApiApp{
 
     EditText txtOldPassword, txtNewPassword, txtConfirmPassword;
     FloatingActionButton btnChangePassword;
-
+    private User user;
+    private KhachHang khachHang;
+    private Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +55,19 @@ public class ResetPasswordActivity extends AppCompatActivity implements ApiApp{
         txtOldPassword = (EditText) findViewById(R.id.txtOldPassword);
         txtNewPassword = (EditText) findViewById(R.id.txtNewPassword);
         txtConfirmPassword = (EditText) findViewById(R.id.txtConfirmPassword);
-
         btnChangePassword = (FloatingActionButton) findViewById(R.id.btnChangePassword);
+
+        Intent intent = getIntent();
+
+        bundle = intent.getBundleExtra(BUNDLE_USER);
+        if (bundle != null) {
+            String role = bundle.getString(ROLE);
+            if (role.equals(ROLE_CUSTOMER)) {
+                khachHang = (KhachHang) bundle.getSerializable(USER);
+            } else {
+                user = (User) bundle.getSerializable(USER);
+            }
+        }
     }
 
     @Override
@@ -55,50 +75,102 @@ public class ResetPasswordActivity extends AppCompatActivity implements ApiApp{
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = MainActivity.preferences.getString(USERNAME,"null");
-                RequestQueue requestQueue = Volley.newRequestQueue(ResetPasswordActivity.this);
-                final Gson gson = new GsonBuilder().create();
-                StringRequest jsonObjectRequest = new StringRequest(
-                        Request.Method.GET,
-                        HTTP_CODE_USER+username,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                User user = gson.fromJson(response, User.class);
-                                if (txtOldPassword.getText().toString().equals(user.getPassword())){
-                                    if (!txtNewPassword.getText().toString().equals("") && txtNewPassword.getText().toString().equals(txtConfirmPassword.getText().toString())){
-                                        user.setPassword(txtNewPassword.getText().toString());
-                                        UserService.updateUser(user, ResetPasswordActivity.this);
-                                        Notify.showToast(getApplicationContext(), R.string.change_susscess, Notify.SHORT);
-                                        if (user.isAdmin()){
-                                            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
-                                            startActivity(intent);
-                                        }else{
-                                            if (user.getRole().equalsIgnoreCase(ROLE_EMPLOYEE)){
-                                                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
-                                                startActivity(intent);
-                                            }else{
-                                                Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        }
-                                    }else{
-                                        Notify.showToast(getApplicationContext(), R.string.password_empty, Notify.SHORT);
-                                    }
-                                }else{
-                                    Notify.showToast(getApplicationContext(), R.string.password_invalid, Notify.SHORT);
-                                }
+                String oldpass = txtOldPassword.getText().toString();
+                String newpass = txtNewPassword.getText().toString();
+                String confirm = txtConfirmPassword.getText().toString();
+                if (!oldpass.equals("") && !newpass.equals("") && !confirm.equals("")){
+                    if (khachHang != null){
+                        Log.d("USER : ", khachHang.getTenkh());
+                        if (khachHang.getPassword().equals(oldpass)){
+                            if (newpass.equals(confirm)){
+                                khachHang.setPassword(newpass);
+                                new KhachHangConnection().execute();
+                                bundle.putString(ROLE, khachHang.getRole());
+                                changeSusscess(khachHang);
+                            }else{
+                                Notify.showToast(getApplicationContext(), R.string.confirm_password_error, Notify.SHORT);
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Notify.showToast(getApplicationContext(), error.toString(), Notify.SHORT);
-                            }
+                        }else {
+                            Notify.showToast(getApplicationContext(), R.string.change_fail, Notify.SHORT);
                         }
-                );
-                requestQueue.add(jsonObjectRequest);
+                    }else if (user != null){
+                        Log.d("USER : ", user.getName());
+                        if (user.getPassword().equals(oldpass)){
+                            if (newpass.equals(confirm)){
+                                user.setPassword(newpass);
+                                new UserConnection().execute();
+                                bundle.putString(ROLE, user.getRole());
+                                changeSusscess(user);
+                            }else{
+                                Notify.showToast(getApplicationContext(), R.string.confirm_password_error, Notify.SHORT);
+                            }
+                        }else{
+                            Notify.showToast(getApplicationContext(), R.string.change_fail, Notify.SHORT);
+                        }
+                    }
+                }else{
+                    Notify.showToast(getApplicationContext(), R.string.password_empty, Notify.SHORT);
+                }
             }
         });
+    }
+
+    private void changeSusscess(Object object){
+        Notify.showToast(getApplicationContext(), R.string.change_susscess, Notify.SHORT);
+        Intent intent = new Intent(getApplicationContext(), InfomationUserActivity.class);
+        bundle.putSerializable(USER, (Serializable) object);
+        intent.putExtra(BUNDLE_USER, bundle);
+        startActivity(intent);
+        finish();
+    }
+    public class UserConnection extends AsyncTask<String, Object, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                String url = String.format(HTTP_NEW_PASSWORD,"User");
+                Jsoup.connect(url).data(CODE, user.getCode())
+                        .data(NEW_PASS, user.getPassword()).post();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public class KhachHangConnection extends AsyncTask<String, Object, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                String url = String.format(HTTP_NEW_PASSWORD,"KhachHang");
+                Jsoup.connect(url).data(MA_KH, khachHang.getMakh())
+                        .data(NEW_PASS, khachHang.getPassword()).post();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (user != null){
+            if (user.getRole().equals(ROLE_ADMIN)){
+                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                intent.putExtra(BUNDLE_USER, bundle);
+                startActivity(intent);
+                finish();
+            }else{
+                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+                intent.putExtra(BUNDLE_USER, bundle);
+                startActivity(intent);
+                finish();
+            }
+        }else if (khachHang != null){
+            Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
+            intent.putExtra(BUNDLE_USER, bundle);
+            startActivity(intent);
+            finish();
+        }
+        super.onBackPressed();
     }
 }

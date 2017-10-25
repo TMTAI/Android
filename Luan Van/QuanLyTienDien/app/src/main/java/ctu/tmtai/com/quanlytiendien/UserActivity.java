@@ -1,9 +1,7 @@
 package ctu.tmtai.com.quanlytiendien;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -31,25 +29,40 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import ctu.tmtai.com.api.ApiApp;
 import ctu.tmtai.com.api.MyProgressDialog;
+import ctu.tmtai.com.models.KhuVuc;
+import ctu.tmtai.com.models.User;
+import ctu.tmtai.com.notify.Notify;
 
+import static ctu.tmtai.com.util.Constant.BUNDLE_KHU_VUC;
+import static ctu.tmtai.com.util.Constant.BUNDLE_USER;
+import static ctu.tmtai.com.util.Constant.HTTP_ALL_KHACH_HANG_THEO_KHU_VUC;
 import static ctu.tmtai.com.util.Constant.HTTP_ALL_KHU_VUC;
+import static ctu.tmtai.com.util.Constant.KHU_VUC;
+import static ctu.tmtai.com.util.Constant.MA_KHU_VUC;
 import static ctu.tmtai.com.util.Constant.MA_THANH_PHO;
+import static ctu.tmtai.com.util.Constant.ROLE;
+import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
 import static ctu.tmtai.com.util.Constant.TEN_KHU_VUC;
+import static ctu.tmtai.com.util.Constant.USER;
 
 public class UserActivity extends AppCompatActivity
         implements ApiApp, NavigationView.OnNavigationItemSelectedListener {
 
     TextView txtCityName;
     // list view
-    private ArrayList<String> arrayList;
+    private ArrayList<String> arrayListTenKhuVuc;
     private ArrayAdapter<String> adapter;
     private ListView lvAreaCustomer;
     private MyProgressDialog myProgress;
-
     private JSONArray jsonArray;
+
+    private Bundle bundle;
+    private User user;
+    private List<KhuVuc> listKhuVuc = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +70,18 @@ public class UserActivity extends AppCompatActivity
 
         new ConnectHTTP().execute();
         myProgress = new MyProgressDialog(this);
-
         myProgress.showProgressBar();
 
         addControls();
         addEvents();
 
-        setList("CẦN THƠ", "TP01");
+        setList("Cần Thơ", "TP01");
+
+        Intent intent = getIntent();
+        bundle = intent.getBundleExtra(BUNDLE_USER);
+        if (bundle!= null){
+            user = (User) bundle.getSerializable(USER);
+        }
     }
 
     @Override
@@ -82,10 +100,10 @@ public class UserActivity extends AppCompatActivity
         txtCityName = (TextView) findViewById(R.id.txtCityName);
 
         lvAreaCustomer = (ListView) findViewById(R.id.lvAreaCustomer);
-        arrayList = new ArrayList<>();
+        arrayListTenKhuVuc = new ArrayList<>();
 
         adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, arrayList
+                this, android.R.layout.simple_list_item_1, arrayListTenKhuVuc
         );
 
         lvAreaCustomer.setAdapter(adapter);
@@ -97,7 +115,19 @@ public class UserActivity extends AppCompatActivity
         lvAreaCustomer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //
+                Bundle bundle = new Bundle();
+                String tenkv = arrayListTenKhuVuc.get(position);
+
+                for (int i=0;i<listKhuVuc.size();i++){
+                    if (tenkv.equalsIgnoreCase(listKhuVuc.get(i).getTenkv())){
+
+                        bundle.putSerializable(KHU_VUC, listKhuVuc.get(i));
+                    }
+                }
+
+                Intent intent = new Intent(getApplicationContext(), ListCustomerActivity.class);
+                intent.putExtra(BUNDLE_KHU_VUC, bundle);
+                startActivity(intent);
             }
         });
     }
@@ -121,17 +151,20 @@ public class UserActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createBundle(Intent intent) {
+        bundle = new Bundle();
+        bundle.putString(ROLE, ROLE_EMPLOYEE);
+        bundle.putSerializable(USER, user);
+        intent.putExtra(BUNDLE_USER, bundle);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -141,10 +174,18 @@ public class UserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.navAccount) {
-            Intent intent = new Intent(getApplication(), InfomationUserActivity.class);
+            Intent intent = new Intent(getApplicationContext(), InfomationUserActivity.class);
+            createBundle(intent);
             startActivity(intent);
+            finish();
+        }else if (id == R.id.navChangePassword) {
+            Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+            createBundle(intent);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.navMap) {
-
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.navFont) {
 
         } else if (id == R.id.navLanguage) {
@@ -156,12 +197,9 @@ public class UserActivity extends AppCompatActivity
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences.Editor editor = MainActivity.preferences.edit();
-                            editor.clear();
-                            editor.commit();
                             Intent intent = new Intent(getApplication(), MainActivity.class);
                             startActivity(intent);
-                            UserActivity.this.finish();
+                            finish();
                         }
                     })
                     .setNegativeButton(R.string.i_think_again, new DialogInterface.OnClickListener() {
@@ -173,9 +211,11 @@ public class UserActivity extends AppCompatActivity
             AlertDialog dialog = builder.create();
             dialog.show();
         } else if (id == R.id.navCanTho){
-            setList("CẦN THƠ", "TP01");
+            setList("Cần Thơ", "TP01");
         }else if (id == R.id.navHauGiang){
-            setList("HẬU GIANG", "TP03");
+            setList("Hậu Giang", "TP03");
+        }else if (id == R.id.navHCM){
+            setList("TP. HCM", "TP02");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -185,11 +225,11 @@ public class UserActivity extends AppCompatActivity
 
     private void setList(String tentp, String matp){
         txtCityName.setText(tentp);
-        arrayList.clear();
+        arrayListTenKhuVuc.clear();
         for (int i=0;i<jsonArray.length();i++){
             try {
                 if (jsonArray.getJSONObject(i).getString(MA_THANH_PHO).toString().equals(matp)){
-                    arrayList.add(jsonArray.getJSONObject(i).getString(TEN_KHU_VUC).toString());
+                    arrayListTenKhuVuc.add(jsonArray.getJSONObject(i).getString(TEN_KHU_VUC).toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -206,11 +246,19 @@ public class UserActivity extends AppCompatActivity
                 Connection connection = Jsoup.connect(HTTP_ALL_KHU_VUC);
                 Document document = connection.get();
                 String str = document.body().text();
-                // đọc và chuyển về JSONObject
+
                 jsonArray = new JSONArray(str);
+
+                for (int i=0;i<jsonArray.length();i++){
+                    KhuVuc kv = new KhuVuc();
+                    kv.setMakv(jsonArray.getJSONObject(i).getString(MA_KHU_VUC));
+                    kv.setTenkv(jsonArray.getJSONObject(i).getString(TEN_KHU_VUC));
+                    kv.setMatp(jsonArray.getJSONObject(i).getString(MA_THANH_PHO));
+                    listKhuVuc.add(kv);
+                }
+
                 myProgress.closeProgressBar();
 
-                Log.d("SKFJJDFKLGJKLDFGJDLFKGJ", jsonArray.toString());
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
