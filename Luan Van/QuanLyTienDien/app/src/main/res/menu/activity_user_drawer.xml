@@ -27,6 +27,7 @@
                 android:id="@+id/navHauGiang"
                 android:icon="@drawable/ic_history_white_24dp"
                 android:title="Hậu Giang" />
+
             <item
                 android:id="@+id/navHCM"
                 android:icon="@drawable/ic_history_white_24dp"

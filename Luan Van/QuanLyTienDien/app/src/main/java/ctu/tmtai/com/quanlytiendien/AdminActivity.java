@@ -58,8 +58,8 @@ public class AdminActivity extends AppCompatActivity
     private ListView lvCustomer, lvEmployee;
     private UserAdapter userAdapter;
     private CustomerAdapter<KhachHang> customerAdapter;
-    private List<User> userList;
-    private List<KhachHang> customerList;
+    private List<User> userList = new ArrayList<>();
+    private List<KhachHang> customerList = new ArrayList<>();
     private EditText txtResetNewPassword, txtResetConfirmPassword;
     private TextView txtPersonName, txtPersonPosition;
     private User user;
@@ -71,11 +71,12 @@ public class AdminActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-
-
         addControls();
         addEvents();
+
+        loadListFormServer();
         loadUserList();
+
     }
 
     @Override
@@ -102,8 +103,6 @@ public class AdminActivity extends AppCompatActivity
 
         lvCustomer = (ListView) findViewById(R.id.lvCustomer);
         lvEmployee = (ListView) findViewById(R.id.lvEmployee);
-        userList = new ArrayList<>();
-        customerList = new ArrayList<>();
 
         userAdapter = new UserAdapter(
                 this, R.layout.layout_custom_user, userList
@@ -117,7 +116,17 @@ public class AdminActivity extends AppCompatActivity
 
         lvCustomer.setAdapter(customerAdapter);
 
-        loadListToServer();
+        loadListFormServer();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        loadUserList();
+
+
     }
 
     private void addTabHost() {
@@ -153,7 +162,7 @@ public class AdminActivity extends AppCompatActivity
             if (!userList.isEmpty()){
                 userList.clear();
             }
-            for (int i = 0; i < arrayUser.length(); i++) {
+            for (int i = 1; i < arrayUser.length(); i++) {
                 try {
                     addUserToList(arrayUser.getJSONObject(i));
                 } catch (JSONException e) {
@@ -178,7 +187,7 @@ public class AdminActivity extends AppCompatActivity
         }
     }
 
-    private void loadListToServer() {
+    private void loadListFormServer() {
         if (!task.isCancelled() || task == null) {
             task.cancel(true);
             task = new MyJsonTask();
@@ -199,10 +208,10 @@ public class AdminActivity extends AppCompatActivity
                 customerList.clear();
                 userList.clear();
                 if (tabId.equalsIgnoreCase(TAB_EMPLOYEE)) {
-                    loadListToServer();
+                    loadListFormServer();
                     loadUserList();
                 } else if (tabId.equalsIgnoreCase(TAB_CUSTOMER)) {
-                    loadListToServer();
+                    loadListFormServer();
                     loadKhachHangList();
                 }
             }
@@ -310,7 +319,7 @@ public class AdminActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         delete(position, list);
-                        loadListToServer();
+                        loadListFormServer();
                         loadUserList();
                         loadKhachHangList();
                     }
@@ -467,6 +476,7 @@ public class AdminActivity extends AppCompatActivity
                 arrayUser = new JSONArray(strAllUser);
 
                 user = new User(arrayUser.getJSONObject(0));
+
                 progressDialog.closeProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();

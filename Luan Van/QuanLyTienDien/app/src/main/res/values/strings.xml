@@ -49,7 +49,7 @@
     <!--String-->
     <string name="Title_Add_User">Add New User</string>
     <string name="Title_Update_Infomation">Update Infomation</string>
-    <string name="electricity_meter">Electricity Meter</string>
+    <string name="electricity_meter">EM</string>
     <string name="select_date">Choose your birthday</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>

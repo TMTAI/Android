@@ -11,6 +11,11 @@ import java.util.List;
 import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 
+import static ctu.tmtai.com.util.Constant.HTTP_DELETE;
+import static ctu.tmtai.com.util.Constant.HTTP_NEW_PASSWORD;
+import static ctu.tmtai.com.util.Constant.MA_KH;
+import static ctu.tmtai.com.util.Constant.NEW_PASS;
+
 /**
  * Created by tranm on 10-Aug-17.
  */
@@ -54,4 +59,16 @@ public class InternetConnectionUtil {
         }
         return list;
     }
+
+    public void delete(String table, String colum, String condition) throws IOException {
+        String url = String.format(HTTP_DELETE, table);
+        Jsoup.connect(url).data(colum, condition).get();
+    }
+
+    public void newPassword(String table, String colum, String condition, String newPass) throws IOException {
+        String url = String.format(HTTP_NEW_PASSWORD, table);
+        Jsoup.connect(url).data(colum, condition)
+                .data(NEW_PASS,newPass).post();
+    }
+
 }

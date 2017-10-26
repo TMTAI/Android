@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         new MyJsonTask().execute();
 
         addControls();
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         editor.putString(USERNAME, username);
         editor.putString(PASSWORD, password);
         Boolean checkLogin = false;
-        Intent intent = null;
         for (User user : userList) {
             if (user.getCode().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
                 checkLogin = true;
@@ -126,13 +124,16 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
                     editor.putBoolean(LOGINED, checkLogin);
                 }
                 if (user.isAdmin()){
-                    intent = new Intent(getApplicationContext(), AdminActivity.class);
-                }else{
-                    intent = new Intent(getApplicationContext(), UserActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                    createBundle(user, intent);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+                    createBundle(user, intent);
+                    startActivity(intent);
+                    finish();
                 }
-                createBundle(user, intent);
-                startActivity(intent);
-                finish();
             }
         }
 
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
                 if (remmember) {
                     editor.putBoolean(LOGINED, checkLogin);
                 }
-                intent = new Intent(getApplicationContext(), AdminActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
                 createBundle(khachHang, intent);
                 startActivity(intent);
                 finish();

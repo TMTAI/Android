@@ -10,15 +10,6 @@
     android:padding="10dp"
     tools:context="ctu.tmtai.com.quanlytiendien.MainActivity">
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.10"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="20sp" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"

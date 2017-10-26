@@ -6,6 +6,7 @@ package ctu.tmtai.com.util;
 
 public class Constant {
     public static String USER = "user";
+    public static String USER_LIST = "user_list";
     public static String JSON_USER = "json_user";
     public static String BUNDLE_USER = "bundle_user";
 
@@ -38,6 +39,7 @@ public class Constant {
     public static String HTTP_ALL_KHU_VUC = URL + "getKhuVuc";
     public static String HTTP_UPDATE_USER = URL + "update%s";
     public static String HTTP_ADD = URL + "add%s";
+
     public static String HTTP_DELETE = URL + "delete%s";
 
 
@@ -51,6 +53,8 @@ public class Constant {
 
     public static String HTTP_GET_THANG = URL + "getThang";
     public static String HTTP_GET_NAM = URL + "getNam";
+
+
 
     public static String HTTP_GET_LOCATION = "https://maps.googleapis.com/maps/api/geocode/json?&address=%s";
 
@@ -109,13 +113,13 @@ public class Constant {
     //Database
     public static String MONGO_ID = "_id";
     public static String DATABASE_NAME = "electric";
-    public static String TABLE_KHACH_HANG = "khachhang";
-    public static String TABLE_DIEN_KE = "dienke";
-    public static String TABLE_USERS = "users";
-    public static String TABLE_HOA_DON = "hoadon";
-    public static String TABLE_KHU_VUC = "khuvuc";
-    public static String TABLE_NAM = "nam";
-    public static String TABLE_THANG = "thang";
+    public static String TABLE_KHACH_HANG = "KhachHang";
+    public static String TABLE_DIEN_KE = "DienKe";
+    public static String TABLE_USER = "User";
+    public static String TABLE_HOA_DON = "HoaDon";
+    public static String TABLE_KHU_VUC = "khuVuc";
+    public static String TABLE_NAM = "Nam";
+    public static String TABLE_THANG = "Thang";
     public static String TABLE_TINH_THANH_PHO = "tinh_thanhpho";
 
 }
