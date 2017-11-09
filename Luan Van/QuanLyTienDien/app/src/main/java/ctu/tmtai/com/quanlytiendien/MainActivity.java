@@ -4,12 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +36,7 @@ import ctu.tmtai.com.util.InternetConnectionUtil;
 
 import static ctu.tmtai.com.util.Constant.*;
 
-public class MainActivity extends AppCompatActivity implements ApiApp {
+public class MainActivity extends AppCompatActivity implements ApiApp{
 
     private EditText txtUserName, txtPassword;
     private CheckBox chkRemember;
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         new MyJsonTask().execute();
 
@@ -64,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         chkRemember = (CheckBox) findViewById(R.id.chkRemember);
         btnLogin = (Button) findViewById(R.id.btnLogin);
     }
-
 
     private void logined() {
         if (preferences.getBoolean(LOGINED, false) == true) {
@@ -134,19 +140,7 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
                     startActivity(intent);
                     finish();
                 }
-            }
-        }
-
-        for (KhachHang khachHang : khachHangList) {
-            if (khachHang.getMakh().equalsIgnoreCase(username) && khachHang.getPassword().equals(password)) {
-                checkLogin = true;
-                if (remmember) {
-                    editor.putBoolean(LOGINED, checkLogin);
-                }
-                Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
-                createBundle(khachHang, intent);
-                startActivity(intent);
-                finish();
+                break;
             }
         }
         if (!checkLogin) {
@@ -175,10 +169,12 @@ public class MainActivity extends AppCompatActivity implements ApiApp {
         @Override
         protected Void doInBackground(String... params) {
             try {
-                JSONArray jsonArray = InternetConnectionUtil.getInstance().getJSONArrayFromServer(HTTP_ALL_USER);
+                String users = String.format(HTTP_ALL, "Users");
+                JSONArray jsonArray = InternetConnectionUtil.getInstance().getJSONArrayFromServer(users);
                 userList = InternetConnectionUtil.getInstance().getListUserFromJSONArray(jsonArray);
 
-                JSONArray jsonCustomer = InternetConnectionUtil.getInstance().getJSONArrayFromServer(HTTP_ALL_KHACH_HANG);
+                String khachhang = String.format(HTTP_ALL, "KhachHang");
+                JSONArray jsonCustomer = InternetConnectionUtil.getInstance().getJSONArrayFromServer(khachhang);
                 khachHangList = InternetConnectionUtil.getInstance().getListKhachHangFromJSONArray(jsonCustomer);
 
             } catch (JSONException e) {

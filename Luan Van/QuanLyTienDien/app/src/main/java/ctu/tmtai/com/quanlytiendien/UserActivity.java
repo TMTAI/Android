@@ -57,7 +57,6 @@ public class UserActivity extends AppCompatActivity
     private ArrayList<String> arrayListTenKhuVuc;
     private ArrayAdapter<String> adapter;
     private ListView lvAreaCustomer;
-    private MyProgressDialog myProgress;
     private JSONArray jsonArray;
 
     private Bundle bundle;
@@ -69,11 +68,15 @@ public class UserActivity extends AppCompatActivity
         setContentView(R.layout.activity_user);
 
         new ConnectHTTP().execute();
-        myProgress = new MyProgressDialog(this);
-        myProgress.showProgressBar();
 
         addControls();
         addEvents();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         setList("Cần Thơ", "TP01");
 
@@ -215,7 +218,7 @@ public class UserActivity extends AppCompatActivity
         }else if (id == R.id.navHauGiang){
             setList("Hậu Giang", "TP03");
         }else if (id == R.id.navHCM){
-            setList("TP. HCM", "TP02");
+            setList("Tp. HCM", "TP02");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -257,10 +260,7 @@ public class UserActivity extends AppCompatActivity
                     listKhuVuc.add(kv);
                 }
 
-                myProgress.closeProgressBar();
-
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();

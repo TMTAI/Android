@@ -74,6 +74,12 @@ public class AdminActivity extends AppCompatActivity
         addControls();
         addEvents();
 
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         loadListFormServer();
         loadUserList();
 
@@ -467,11 +473,13 @@ public class AdminActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(String... params) {
             try {
-                Document documentKhachHang = Jsoup.connect(HTTP_ALL_KHACH_HANG).get();
+                String khachhang = String.format(HTTP_ALL, "KhachHang");
+                Document documentKhachHang = Jsoup.connect(khachhang).get();
                 String strAllKhachHang = documentKhachHang.body().text();
                 arrayKhachHang = new JSONArray(strAllKhachHang);
 
-                Document documentUser = Jsoup.connect(HTTP_ALL_USER).get();
+                String users = String.format(HTTP_ALL, "Users");
+                Document documentUser = Jsoup.connect(users).get();
                 String strAllUser = documentUser.body().text();
                 arrayUser = new JSONArray(strAllUser);
 

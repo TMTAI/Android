@@ -24,15 +24,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import ctu.tmtai.com.api.ApiApp;
-import ctu.tmtai.com.models.KhachHang;
 import ctu.tmtai.com.models.User;
 import ctu.tmtai.com.notify.Notify;
-import ctu.tmtai.com.service.UserService;
 
 import static ctu.tmtai.com.util.Constant.ADDRESS;
 import static ctu.tmtai.com.util.Constant.BIRTH_DAY;
@@ -45,18 +41,14 @@ import static ctu.tmtai.com.util.Constant.GENDER_FEMALE;
 import static ctu.tmtai.com.util.Constant.GENDER_MALE;
 import static ctu.tmtai.com.util.Constant.GIOI_TINH;
 import static ctu.tmtai.com.util.Constant.HTTP_ADD;
-import static ctu.tmtai.com.util.Constant.HTTP_ALL_KHACH_HANG;
-import static ctu.tmtai.com.util.Constant.HTTP_ALL_USER;
-import static ctu.tmtai.com.util.Constant.IS_ADMIN;
+import static ctu.tmtai.com.util.Constant.HTTP_ALL;
 import static ctu.tmtai.com.util.Constant.MA_DK;
 import static ctu.tmtai.com.util.Constant.MA_KH;
 import static ctu.tmtai.com.util.Constant.MA_KHU_VUC;
 import static ctu.tmtai.com.util.Constant.NAME;
 import static ctu.tmtai.com.util.Constant.NGAY_SINH;
-import static ctu.tmtai.com.util.Constant.PASSWORD;
 import static ctu.tmtai.com.util.Constant.PHONE;
 import static ctu.tmtai.com.util.Constant.ROLE;
-import static ctu.tmtai.com.util.Constant.ROLE_ADMIN;
 import static ctu.tmtai.com.util.Constant.ROLE_CUSTOMER;
 import static ctu.tmtai.com.util.Constant.ROLE_EMPLOYEE;
 import static ctu.tmtai.com.util.Constant.TEN_KH;
@@ -227,7 +219,6 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp, TextWa
         if (check) {
             if (rdCustomer.isChecked()) {
                 new addKhachHangConnection().execute();
-
             } else if (rdEmployee.isChecked()) {
                 new addUserConnection().execute();
             }
@@ -286,10 +277,12 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp, TextWa
         @Override
         protected Void doInBackground(String... params) {
             try {
-                Document document = Jsoup.connect(HTTP_ALL_USER).get();
+                String users = String.format(HTTP_ALL, "Users");
+                Document document = Jsoup.connect(users).get();
                 String str = document.body().text();
 
-                Document doc = Jsoup.connect(HTTP_ALL_KHACH_HANG).get();
+                String khachhang = String.format(HTTP_ALL, "KhachHang");
+                Document doc = Jsoup.connect(khachhang).get();
                 String strKH = doc.body().text();
                 JSONArray jsonArray = new JSONArray(str);
                 array = new JSONArray(strKH);
@@ -338,7 +331,6 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp, TextWa
             String makv = getMaKV(addressDistrict, addressCity);
             String url = String.format(HTTP_ADD, "KhachHang");
             try {
-
                 Jsoup.connect(url)
                         .data(MA_KH, code)
                         .data(TEN_KH, name)

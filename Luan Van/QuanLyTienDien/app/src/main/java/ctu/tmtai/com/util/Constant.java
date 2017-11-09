@@ -33,18 +33,15 @@ public class Constant {
     public static String PORT = ":8888/";
     public static String URL = HTTP + HOST + PORT;
 
-    public static String HTTP_GET_USER = URL + "getUser";
-    public static String HTTP_ALL_USER = URL + "getAllUsers";
+    public static String HTTP_GET = URL + "get%s";
+    public static String HTTP_ALL = URL + "getAll%s";
     public static String HTTP_NEW_PASSWORD = URL + "newPassword%s";
     public static String HTTP_ALL_KHU_VUC = URL + "getKhuVuc";
+
     public static String HTTP_UPDATE_USER = URL + "update%s";
     public static String HTTP_ADD = URL + "add%s";
-
     public static String HTTP_DELETE = URL + "delete%s";
 
-
-    public static String HTTP_GET_KHACH_HANG = URL + "getKhachHang";
-    public static String HTTP_ALL_KHACH_HANG = URL + "getAllKhachHang";
     public static String HTTP_ALL_KHACH_HANG_THEO_KHU_VUC = URL + "getListKhachHang";
 
     public static String HTTP_GET_DIEN_KE_BY_MA_KH = URL + "getDienKe";
@@ -56,7 +53,7 @@ public class Constant {
 
 
 
-    public static String HTTP_GET_LOCATION = "https://maps.googleapis.com/maps/api/geocode/json?&address=%s";
+    public static String HTTP_GET_LOCATION = "https://maps.googleapis.com/maps/api/geocode/json?&address=%s&key=%s";
 
     //
     public static String TAB_EMPLOYEE = "tabEmployee";

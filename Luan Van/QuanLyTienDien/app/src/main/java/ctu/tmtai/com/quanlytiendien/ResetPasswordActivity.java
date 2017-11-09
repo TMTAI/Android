@@ -24,7 +24,6 @@ import ctu.tmtai.com.notify.Notify;
 
 import static ctu.tmtai.com.util.Constant.BUNDLE_USER;
 import static ctu.tmtai.com.util.Constant.CODE;
-import static ctu.tmtai.com.util.Constant.HTTP_GET_USER;
 import static ctu.tmtai.com.util.Constant.HTTP_NEW_PASSWORD;
 import static ctu.tmtai.com.util.Constant.MA_KH;
 import static ctu.tmtai.com.util.Constant.NEW_PASS;
@@ -32,7 +31,6 @@ import static ctu.tmtai.com.util.Constant.ROLE;
 import static ctu.tmtai.com.util.Constant.ROLE_ADMIN;
 import static ctu.tmtai.com.util.Constant.ROLE_CUSTOMER;
 import static ctu.tmtai.com.util.Constant.USER;
-import static ctu.tmtai.com.util.Constant.USERNAME;
 
 public class ResetPasswordActivity extends AppCompatActivity implements ApiApp{
 

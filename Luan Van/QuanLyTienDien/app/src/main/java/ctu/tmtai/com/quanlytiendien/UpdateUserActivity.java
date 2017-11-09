@@ -161,9 +161,9 @@ public class UpdateUserActivity extends AppCompatActivity implements ApiApp {
             try {
                 String url = null;
                 if (user.isAdmin()){
-                    url = String.format(HTTP_UPDATE_USER,"Admin");
+                    url = String.format(HTTP_UPDATE_USER, "Admin");
                 }else{
-                    url = String.format(HTTP_UPDATE_USER,"User");
+                    url = String.format(HTTP_UPDATE_USER, "User");
                 }
                 Jsoup.connect(url)
                         .data(CODE, user.getCode())

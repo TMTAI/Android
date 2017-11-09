@@ -54,6 +54,7 @@ public class FragmentTabListCustomer extends Fragment {
     private FloatingActionButton btnUpdateComplete, btnSubmit;
     private DienKe dk;
     private KhachHang kh;
+
     public FragmentTabListCustomer(){
     }
 
@@ -109,7 +110,6 @@ public class FragmentTabListCustomer extends Fragment {
             try {
 
                 String str = Jsoup.connect(HTTP_ALL_KHACH_HANG_THEO_KHU_VUC).data(MA_KHU_VUC, kv.getMakv()).get().body().text();
-                Log.d("STRING = ", str);
                 JSONArray arrayKhachHang = new JSONArray(str);
                 KhachHang khachHang;
                 for (int i=0;i<arrayKhachHang.length();i++){

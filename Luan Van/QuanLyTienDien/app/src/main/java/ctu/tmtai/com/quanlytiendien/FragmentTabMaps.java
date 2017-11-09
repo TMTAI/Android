@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
@@ -35,6 +37,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import ctu.tmtai.com.api.MyProgressDialog;
 import ctu.tmtai.com.models.KhachHang;
@@ -60,7 +63,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
     private Location location;
     private GoogleApiClient gac;
     private List<JSONObject> listObject;
-    private MyProgressDialog dialog;
+
     public FragmentTabMaps() {
 
     }
@@ -68,9 +71,6 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-
-        dialog = new MyProgressDialog(getContext());
-        dialog.showProgressBar();
         View view = inflater.inflate(R.layout.fragment_tab_maps, container, false);
         listObject = new ArrayList<>();
 
@@ -99,8 +99,9 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
-
         }
+        Log.d("LIST OBJECT ====== ", listObject.toString());
+        Notify.showToast(getContext(), "LIST OBJECT ======= " + listObject.toString(), Notify.SHORT);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
     }
@@ -121,8 +122,8 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
 
                     LatLng latLng = new LatLng(lat, lng);
 
-                    Log.d("TEN KHAC HANG ===" + khachHangList.get(i).getTenkh() + "LOCATION === ", lat + " ----- " + lng);
-                    Log.d("ADDRESS ===", khachHangList.get(i).getDiachi() );
+                    Log.d("TEN KHACH HANG ===" + khachHangList.get(i).getTenkh() + "LOCATION === ", lat + " ----- " + lng);
+                    Log.d("ADDRESS ===", khachHangList.get(i).getDiachi());
                     MarkerOptions marker = new MarkerOptions()
                             .position(latLng)
                             .title(khachHangList.get(i).getTenkh());
@@ -131,9 +132,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
                     mMap.addMarker(marker);
                 }
 
-                showMyLocation();
-
-                dialog.closeProgressBar();
+//                showMyLocation();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -152,7 +151,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API).build();
         }
-        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -162,9 +161,6 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
-        location = LocationServices.FusedLocationApi.getLastLocation(gac);
-
     }
 
     private void showMyLocation() {
@@ -175,6 +171,9 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
         location = LocationServices.FusedLocationApi.getLastLocation(gac);
 
         if (location != null) {
+
+            Logger.getLogger("LOCATION =====" + location.getLatitude());
+
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
@@ -194,6 +193,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        gac.connect();
     }
 
     @Override
@@ -228,14 +228,14 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
             try {
 
                 String str = Jsoup.connect(HTTP_ALL_KHACH_HANG_THEO_KHU_VUC).data(MA_KHU_VUC, kv.getMakv()).get().body().text();
-                Log.d("STRING = ", str);
+                Log.d("DANH SACH KHACH HANG = ", str);
                 JSONArray arrayKhachHang = new JSONArray(str);
-                KhachHang khachHang;
+                String key = "AIzaSyDoHL8_Cq50yCBJxniWPsLt8c2bxxKJ1ew";
                 for (int i = 0; i < arrayKhachHang.length(); i++) {
-                    khachHang = new KhachHang(arrayKhachHang.getJSONObject(i));
+                    KhachHang khachHang = new KhachHang(arrayKhachHang.getJSONObject(i));
                     khachHangList.add(khachHang);
 
-                    String address = Jsoup.connect(String.format(HTTP_GET_LOCATION, khachHang.getDiachi()))
+                    String address = Jsoup.connect(String.format(HTTP_GET_LOCATION, khachHang.getDiachi(), key))
                             .ignoreContentType(true)
                             .get().body().text();
 

@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -63,7 +64,6 @@ public class ListCustomerActivity extends AppCompatActivity implements ApiApp, O
         tabLayout.setupWithViewPager(pager);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(adapter);
-
     }
 
     @Override
@@ -129,7 +129,6 @@ public class ListCustomerActivity extends AppCompatActivity implements ApiApp, O
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
     }
 
     @Override

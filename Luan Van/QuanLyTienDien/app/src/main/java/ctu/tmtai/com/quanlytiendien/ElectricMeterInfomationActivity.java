@@ -61,7 +61,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
 
         addControls();
         addEvents();
-
     }
 
     @Override
@@ -148,7 +147,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
             txtOldNubmer.setText(dk.getChisocu().toString());
             txtNewNumber.setText(dk.getChisomoi().toString());
         }
-
 
         alertDialogBuilder
                 .setTitle(R.string.change_password)

@@ -22,7 +22,7 @@ import static ctu.tmtai.com.util.Constant.TEN_KH;
  * Created by tranm on 30-Jul-17.
  */
 
-public class KhachHang implements Serializable{
+public class KhachHang implements Serializable {
     private String makh;
     private String tenkh;
     private String diachi;
@@ -51,7 +51,7 @@ public class KhachHang implements Serializable{
         this.makh = "";
     }
 
-    public KhachHang(String makh, String tenkh, String diachi,  String makv, String madk, String cmnd, String phone, String gioitinh, Blob avatar, String role, String password, String ngaysinh) {
+    public KhachHang(String makh, String tenkh, String diachi, String makv, String madk, String cmnd, String phone, String gioitinh, Blob avatar, String role, String password, String ngaysinh) {
         this.makh = makh;
         this.tenkh = tenkh;
         this.diachi = diachi;
@@ -66,24 +66,25 @@ public class KhachHang implements Serializable{
         this.ngaysinh = ngaysinh;
     }
 
-    public KhachHang(JSONObject json){
+    public KhachHang(JSONObject json) {
         try {
             this.makh = json.getString(MA_KH);
             this.tenkh = json.getString(TEN_KH);
             this.diachi = json.getString(DIA_CHI);
-            this.makv=json.getString(MA_KHU_VUC);
-            this.madk= json.getString(MA_DK);
-            this.cmnd= json.getString(CMND);
-            this.phone= json.getString(PHONE);
-            this.gioitinh= json.getString(GIOI_TINH);
-            this.role= json.getString(ROLE);
-            this.password= json.getString(PASSWORD);
+            this.makv = json.getString(MA_KHU_VUC);
+            this.madk = json.getString(MA_DK);
+            this.cmnd = json.getString(CMND);
+            this.phone = json.getString(PHONE);
+            this.gioitinh = json.getString(GIOI_TINH);
+            this.role = json.getString(ROLE);
+            this.password = json.getString(PASSWORD);
             this.ngaysinh = json.getString(NGAY_SINH);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
+
     public String getMakh() {
         return makh;
     }
