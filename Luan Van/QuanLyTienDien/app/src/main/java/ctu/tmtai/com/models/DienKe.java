@@ -135,6 +135,8 @@ public class DienKe {
     }
 
     public int getThanhtien() {
+        int sotien = tinhTien(chisomoi, chisocu) * 10/100;
+        thanhtien = sotien;
         return thanhtien;
     }
 

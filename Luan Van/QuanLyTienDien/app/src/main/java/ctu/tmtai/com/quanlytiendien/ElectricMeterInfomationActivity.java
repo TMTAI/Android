@@ -149,7 +149,7 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
         }
 
         alertDialogBuilder
-                .setTitle(R.string.change_password)
+                .setTitle(R.string.infomation_number)
                 .setView(alertLayout)
                 .setPositiveButton(getString(R.string.new_number), new DialogInterface.OnClickListener() {
                     @Override
@@ -165,7 +165,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
                         intent.putExtra(BUNDLE_USER, bundle);
                         startActivity(intent);
                         finish();
-                        Log.d("New Number", txtNewNumber.getText().toString());
                     }
                 })
                 .setNegativeButton(getString(R.string.pay), new DialogInterface.OnClickListener() {
@@ -181,7 +180,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
                         intent.putExtra(BUNDLE_USER, bundle);
                         startActivity(intent);
                         finish();
-                        Log.d("New Number", txtNewNumber.getText().toString());
                     }
                 });
 

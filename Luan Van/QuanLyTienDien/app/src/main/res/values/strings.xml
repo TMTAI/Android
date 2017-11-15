@@ -80,6 +80,7 @@
     <string name="old_number">Old Number</string>
     <string name="new_number">New Number</string>
     <string name="pay">Pay</string>
+    <string name="infomation_number">Infomation Number</string>
 
     <!--Server-->
     <string name="server_connect_error">Server Connect Error</string>
