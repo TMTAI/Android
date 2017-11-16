@@ -75,7 +75,7 @@ public class AdminActivity extends AppCompatActivity
         addEvents();
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -379,7 +379,6 @@ public class AdminActivity extends AppCompatActivity
                         }
                     }
 
-
                     if (userList.isEmpty() && customerList.isEmpty()) {
                         for (int i = 0; i < arrayUser.length(); i++) {
                             if (arrayUser.getJSONObject(i).get(ADDRESS).toString().toUpperCase().indexOf(newText.toUpperCase()) > -1) {
@@ -469,7 +468,7 @@ public class AdminActivity extends AppCompatActivity
     }
 
     // Lớp xử lý đa tiến trình:
-    public class MyJsonTask extends AsyncTask<String, Object, Void> {
+    public class MyJsonTask extends AsyncTask<String, JSONObject, Void> {
         @Override
         protected Void doInBackground(String... params) {
             try {
@@ -493,18 +492,6 @@ public class AdminActivity extends AppCompatActivity
             }
             return null;
         }
-
-        @Override
-        protected void onProgressUpdate(Object... values) {
-            super.onProgressUpdate(values);
-            // ta cập nhật giao diện ở đây:
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-        }
     }
 
     public class UserConnection extends AsyncTask<String, Object, Void> {
@@ -522,12 +509,12 @@ public class AdminActivity extends AppCompatActivity
         }
     }
 
-    public class deleteUserConnection extends AsyncTask<String, Object, Void> {
+    public class deleteUserConnection extends AsyncTask<String, JSONObject, Void> {
         @Override
         protected Void doInBackground(String... params) {
             try {
                 String url = String.format(HTTP_DELETE, "User");
-                Jsoup.connect(url).data(CODE, user.getCode()).get();
+                Jsoup.connect(url).data(CODE, user.getCode()).post();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -541,7 +528,7 @@ public class AdminActivity extends AppCompatActivity
         protected Void doInBackground(String... params) {
             try {
                 String url = String.format(HTTP_DELETE, "KhachHang");
-                Jsoup.connect(url).data(MA_KH, khachHang.getMakh()).get();
+                Jsoup.connect(url).data(MA_KH, khachHang.getMakh()).post();
             } catch (IOException e) {
                 e.printStackTrace();
             }
