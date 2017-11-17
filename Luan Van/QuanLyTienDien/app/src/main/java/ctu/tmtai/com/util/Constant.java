@@ -51,8 +51,6 @@ public class Constant {
     public static String HTTP_GET_THANG = URL + "getThang";
     public static String HTTP_GET_NAM = URL + "getNam";
 
-
-
     public static String HTTP_GET_LOCATION = "https://maps.googleapis.com/maps/api/geocode/json?&address=%s&key=%s";
 
     //

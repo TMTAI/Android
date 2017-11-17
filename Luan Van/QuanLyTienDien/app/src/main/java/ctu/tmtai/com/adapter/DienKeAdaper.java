@@ -11,10 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import ctu.tmtai.com.models.DienKe;
 import ctu.tmtai.com.quanlytiendien.R;
+import ctu.tmtai.com.util.MonthConstant;
+
+import static ctu.tmtai.com.util.FormatConstant.CURRENCY_FORMAT;
+import static ctu.tmtai.com.util.FormatConstant.VND;
 
 /**
  * Created by tranm on 08-Aug-17.
@@ -42,13 +48,16 @@ public class DienKeAdaper extends ArrayAdapter<DienKe> {
         TextView txtItemSoTien = (TextView) view.findViewById(R.id.txtItemSoTien);
 
         DienKe dienKe = this.objects.get(position);
+        String thang = MonthConstant.getMapThang().get(dienKe.getMathang());
+        NumberFormat number = new DecimalFormat(CURRENCY_FORMAT + " " + VND);
 
-
+        String oldNumber = context.getResources().getString(R.string.old_number);
+        String newNumber = context.getResources().getString(R.string.new_number);
         if (dienKe != null){
-            txtItemThangListDK.setText(dienKe.getMathang());
-            txtItemChiSoCuListDK.setText(dienKe.getChisocu().toString());
-            txtItemChiSoMoiListDK.setText(dienKe.getChisomoi().toString());
-            txtItemSoTien.setText(String.valueOf(dienKe.getThanhtien()).toString());
+            txtItemThangListDK.setText(thang);
+            txtItemChiSoCuListDK.setText(oldNumber + ": " + dienKe.getChisocu().toString());
+            txtItemChiSoMoiListDK.setText(newNumber + ": "+ dienKe.getChisomoi().toString());
+            txtItemSoTien.setText(number.format(dienKe.getThanhtien()));
 
             if (!dienKe.isThanhtoan()){
                 txtItemThangListDK.setTextColor(Color.RED);
