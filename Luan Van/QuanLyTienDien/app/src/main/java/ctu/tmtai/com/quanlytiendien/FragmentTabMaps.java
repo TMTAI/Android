@@ -98,10 +98,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
         if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
-        } else {
         }
-        Log.d("LIST OBJECT ====== ", listObject.toString());
-        Notify.showToast(getContext(), "LIST OBJECT ======= " + listObject.toString(), Notify.SHORT);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
     }
@@ -122,17 +119,14 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
 
                     LatLng latLng = new LatLng(lat, lng);
 
-                    Log.d("TEN KHACH HANG ===" + khachHangList.get(i).getTenkh() + "LOCATION === ", lat + " ----- " + lng);
-                    Log.d("ADDRESS ===", khachHangList.get(i).getDiachi());
                     MarkerOptions marker = new MarkerOptions()
                             .position(latLng)
                             .title(khachHangList.get(i).getTenkh());
 
-
                     mMap.addMarker(marker);
                 }
 
-//                showMyLocation();
+                showMyLocation();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -172,7 +166,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
 
         if (location != null) {
 
-            Logger.getLogger("LOCATION =====" + location.getLatitude());
+            Logger.getLogger("Vị trí hiện tại của bạn là : " + location.getLatitude());
 
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
