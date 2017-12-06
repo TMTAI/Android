@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ctu.tmtai.com.quanlytiendien.InfomationUserActivity"
-    android:weightSum="1">
+    android:padding="10dp"
+    android:weightSum="1"
+    tools:context="ctu.tmtai.com.quanlytiendien.InfomationUserActivity">
 
 
     <LinearLayout
@@ -193,7 +194,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnEditInfomation"
             android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
             android:layout_weight="0.05"
             android:clickable="true"
             android:paddingLeft="10dp"
