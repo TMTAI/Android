@@ -12,7 +12,7 @@ import ctu.tmtai.com.quanlytiendien.MapsActivity;
  * Created by tranm on 04-Aug-17.
  */
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter{
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);

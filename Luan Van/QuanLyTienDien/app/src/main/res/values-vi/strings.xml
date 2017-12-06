@@ -97,4 +97,5 @@
     <string name="cancel">Hủy</string>
     <string name="delete_user">Xóa người dùng</string>
     <string name="input_invalid">Dữ liệu nhập vào sai hoặc rỗng</string>
+    <string name="not_show_location">Không thể hiện thị vị trí. Bạn đã kích hoạt định vị trên thiết bị của mình?</string>
 </resources>

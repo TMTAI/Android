@@ -180,8 +180,7 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         } else {
-            Notify.showToast(getContext(), "Không thể hiển thị vị trí. " +
-                    "Bạn đã kích hoạt location trên thiết bị chưa?", Notify.SHORT);
+            Notify.showToast(getContext(), getContext().getText(R.string.not_show_location).toString(), Notify.SHORT);
         }
     }
 
@@ -222,7 +221,6 @@ public class FragmentTabMaps extends Fragment implements OnMapReadyCallback, Goo
             try {
 
                 String str = Jsoup.connect(HTTP_ALL_KHACH_HANG_THEO_KHU_VUC).data(MA_KHU_VUC, kv.getMakv()).get().body().text();
-                Log.d("DANH SACH KHACH HANG = ", str);
                 JSONArray arrayKhachHang = new JSONArray(str);
                 String key = "AIzaSyDoHL8_Cq50yCBJxniWPsLt8c2bxxKJ1ew";
                 for (int i = 0; i < arrayKhachHang.length(); i++) {

@@ -14,6 +14,8 @@
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="list_customer">List Customer</string>
+    <string name="map">Map</string>
 
     <!-- Info Employee-->
     <string name="name">Name</string>
@@ -119,4 +121,6 @@
 
     <!-- Language -->
     <string name="language">Language</string>
+
+    <string name="not_show_location">Can not show location. Did you enable location on your device?</string>
 </resources>
