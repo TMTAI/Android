@@ -46,24 +46,28 @@ public class DienKeAdaper extends ArrayAdapter<DienKe> {
         TextView txtItemChiSoCuListDK = (TextView) view.findViewById(R.id.txtItemChiSoCuListDK);
         TextView txtItemChiSoMoiListDK = (TextView) view.findViewById(R.id.txtItemChiSoMoiListDK);
         TextView txtItemSoTien = (TextView) view.findViewById(R.id.txtItemSoTien);
+        TextView txtView = (TextView) view.findViewById(R.id.txtView);
 
         DienKe dienKe = this.objects.get(position);
-        String thang = MonthConstant.getMapThang().get(dienKe.getMathang());
+        String month = "month_" + dienKe.getMathang();
+        Integer thang = MonthConstant.getMapThang().get(month);
         NumberFormat number = new DecimalFormat(CURRENCY_FORMAT + " " + VND);
 
         String oldNumber = context.getResources().getString(R.string.old_number);
         String newNumber = context.getResources().getString(R.string.new_number);
+        String money = context.getResources().getString(R.string.money);
         if (dienKe != null){
-            txtItemThangListDK.setText(thang);
+            txtItemThangListDK.setText(context.getText(thang));
             txtItemChiSoCuListDK.setText(oldNumber + ": " + dienKe.getChisocu().toString());
             txtItemChiSoMoiListDK.setText(newNumber + ": "+ dienKe.getChisomoi().toString());
-            txtItemSoTien.setText(number.format(dienKe.getThanhtien()));
+            txtItemSoTien.setText(money + ": " + number.format((dienKe.getThanhtien() + dienKe.getThanhtien()*0.1)*10));
 
             if (!dienKe.isThanhtoan()){
                 txtItemThangListDK.setTextColor(Color.RED);
                 txtItemChiSoCuListDK.setTextColor(Color.RED);
                 txtItemChiSoMoiListDK.setTextColor(Color.RED);
                 txtItemSoTien.setTextColor(Color.RED);
+                txtView.setTextColor(Color.RED);
             }
         }else{
 

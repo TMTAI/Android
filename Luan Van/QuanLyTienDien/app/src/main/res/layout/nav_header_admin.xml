@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/ic_person_white_24dp_xhdpi" />
 
     <TextView
-        android:id="@+id/txtPersonNameUser"
+        android:id="@+id/txtPersonNameAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -30,7 +30,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txtPersonPositionUser"
+        android:id="@+id/txtPersonPositionAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Person Position"

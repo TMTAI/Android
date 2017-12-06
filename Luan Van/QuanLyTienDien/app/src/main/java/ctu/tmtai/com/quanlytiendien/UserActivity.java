@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.internal.na;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +54,8 @@ import static ctu.tmtai.com.util.Constant.USER;
 public class UserActivity extends AppCompatActivity
         implements ApiApp, NavigationView.OnNavigationItemSelectedListener {
 
-    TextView txtCityName;
+    TextView txtCityName, txtPersonNameUser, txtPersonPositionUser;
+
     // list view
     private ArrayList<String> arrayListTenKhuVuc;
     private ArrayAdapter<String> adapter;
@@ -64,6 +67,8 @@ public class UserActivity extends AppCompatActivity
     private List<KhuVuc> listKhuVuc = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
@@ -84,6 +89,9 @@ public class UserActivity extends AppCompatActivity
         bundle = intent.getBundleExtra(BUNDLE_USER);
         if (bundle!= null){
             user = (User) bundle.getSerializable(USER);
+
+            txtPersonNameUser.setText(user.getName());
+            txtPersonPositionUser.setText(user.getRole());
         }
     }
 
@@ -100,6 +108,11 @@ public class UserActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+
+        txtPersonNameUser = (TextView) header.findViewById(R.id.txtPersonNameUser);
+        txtPersonPositionUser = (TextView) header.findViewById(R.id.txtPersonPositionUser);
+
         txtCityName = (TextView) findViewById(R.id.txtCityName);
 
         lvAreaCustomer = (ListView) findViewById(R.id.lvAreaCustomer);
@@ -110,7 +123,6 @@ public class UserActivity extends AppCompatActivity
         );
 
         lvAreaCustomer.setAdapter(adapter);
-
     }
 
     @Override
@@ -145,24 +157,6 @@ public class UserActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void createBundle(Intent intent) {
         bundle = new Bundle();
         bundle.putString(ROLE, ROLE_EMPLOYEE);
@@ -173,6 +167,7 @@ public class UserActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -186,11 +181,6 @@ public class UserActivity extends AppCompatActivity
             createBundle(intent);
             startActivity(intent);
             finish();
-        } else if (id == R.id.navMap) {
-            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.navFont) {
-
         } else if (id == R.id.navLanguage) {
 
         } else if (id == R.id.navLogout) {

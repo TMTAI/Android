@@ -61,7 +61,7 @@ public class AdminActivity extends AppCompatActivity
     private List<User> userList = new ArrayList<>();
     private List<KhachHang> customerList = new ArrayList<>();
     private EditText txtResetNewPassword, txtResetConfirmPassword;
-    private TextView txtPersonName, txtPersonPosition;
+    private TextView txtPersonNameAdmin, txtPersonPositionAdmin;
     private User user;
     private KhachHang khachHang;
 
@@ -87,9 +87,6 @@ public class AdminActivity extends AppCompatActivity
 
     @Override
     public void addControls() {
-        txtPersonName = (TextView) findViewById(R.id.txtPersonName);
-        txtPersonPosition = (TextView) findViewById(R.id.txtPersonPosition);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -101,6 +98,11 @@ public class AdminActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+
+        txtPersonNameAdmin = (TextView) header.findViewById(R.id.txtPersonNameAdmin);
+        txtPersonPositionAdmin = (TextView) header.findViewById(R.id.txtPersonPositionAdmin);
 
         // ================================================= //
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -132,7 +134,10 @@ public class AdminActivity extends AppCompatActivity
 
         loadUserList();
 
-
+        if (user != null){
+            txtPersonNameAdmin.setText(user.getName());
+            txtPersonPositionAdmin.setText(user.getRole());
+        }
     }
 
     private void addTabHost() {
@@ -255,8 +260,8 @@ public class AdminActivity extends AppCompatActivity
     private void delete(final int position, final List list) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminActivity.this);
         alertDialogBuilder
-                .setTitle(R.string.delete)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle(this.getText(R.string.delete))
+                .setPositiveButton(this.getText(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         try {
@@ -276,7 +281,7 @@ public class AdminActivity extends AppCompatActivity
                         finish();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(this.getText(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -297,7 +302,7 @@ public class AdminActivity extends AppCompatActivity
         alertDialogBuilder
                 .setTitle(R.string.change_password)
                 .setView(alertLayout)
-                .setPositiveButton("New Password", new DialogInterface.OnClickListener() {
+                .setPositiveButton(this.getText(R.string.new_password), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         if (!txtResetNewPassword.getText().toString().equals("") && txtResetNewPassword.getText().toString().equals(txtResetConfirmPassword.getText().toString())) {
@@ -321,7 +326,7 @@ public class AdminActivity extends AppCompatActivity
                         }
                     }
                 })
-                .setNegativeButton("Delete User", new DialogInterface.OnClickListener() {
+                .setNegativeButton(this.getText(R.string.delete_user), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         delete(position, list);
@@ -423,8 +428,6 @@ public class AdminActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), InfomationUserActivity.class);
             createBundle(intent);
             startActivity(intent);
-        } else if (id == R.id.navAddArea) {
-
         } else if (id == R.id.navChangePassword) {
             Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
             createBundle(intent);
@@ -433,8 +436,6 @@ public class AdminActivity extends AppCompatActivity
 
         } else if (id == R.id.navLogoutAdmin) {
             logout();
-        } else if (id == R.id.navFontAdmin) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

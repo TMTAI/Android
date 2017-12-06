@@ -6,48 +6,40 @@
         <item
             android:id="@+id/navAccount"
             android:icon="@drawable/ic_person_white_24dp"
-            android:title="Account" />
+            android:title="@string/account" />
         <item
             android:id="@+id/navChangePassword"
             android:icon="@drawable/ic_update_white_24dp"
-            android:title="Change Password" />
-        <item
-            android:id="@+id/navMap"
-            android:icon="@android:drawable/ic_dialog_map"
-            android:title="Map" />
+            android:title="@string/change_password" />
     </group>
 
     <item android:title="Cities">
         <menu>
             <item
                 android:id="@+id/navCanTho"
-                android:icon="@drawable/ic_history_white_24dp"
-                android:title="Cần Thơ" />
+                android:icon="@drawable/ic_local_library_white_24dp"
+                android:title="@string/cantho" />
             <item
                 android:id="@+id/navHauGiang"
-                android:icon="@drawable/ic_history_white_24dp"
-                android:title="Hậu Giang" />
+                android:icon="@drawable/ic_local_library_white_24dp"
+                android:title="@string/haugiang" />
             <item
                 android:id="@+id/navHCM"
-                android:icon="@drawable/ic_history_white_24dp"
-                android:title="Tp. HCM" />
+                android:icon="@drawable/ic_local_library_white_24dp"
+                android:title="@string/hcm" />
         </menu>
     </item>
 
     <item android:title="Settings">
         <menu>
             <item
-                android:id="@+id/navFont"
-                android:icon="@drawable/ic_text_format_white_24dp"
-                android:title="Font" />
-            <item
                 android:id="@+id/navLanguage"
                 android:icon="@drawable/ic_translate_white_24dp"
-                android:title="Language" />
+                android:title="@string/language" />
             <item
                 android:id="@+id/navLogout"
                 android:icon="@drawable/ic_person_outline_white_24dp"
-                android:title="Logout" />
+                android:title="@string/logout" />
         </menu>
     </item>
 

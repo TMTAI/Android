@@ -5,17 +5,11 @@
         <item
             android:id="@+id/navAccountAdmin"
             android:icon="@drawable/ic_person_white_24dp"
-            android:title="Account" />
+            android:title="@string/account" />
         <item
             android:id="@+id/navChangePassword"
             android:icon="@drawable/ic_update_white_24dp"
-            android:title="Change Password" />
-        <item
-            android:id="@+id/navAddArea"
-            android:title="Add Area" />
-        <item
-            android:id="@+id/nav_manage"
-            android:title="Tools" />
+            android:title="@string/change_password" />
     </group>
 
     <item
@@ -23,17 +17,13 @@
         android:title="Settings">
         <menu>
             <item
-                android:id="@+id/navFontAdmin"
-                android:icon="@drawable/ic_text_format_white_24dp"
-                android:title="Font" />
-            <item
                 android:id="@+id/navLanguageAdmin"
                 android:icon="@drawable/ic_translate_white_24dp"
-                android:title="Language" />
+                android:title="@string/language" />
             <item
                 android:id="@+id/navLogoutAdmin"
                 android:icon="@drawable/ic_person_outline_white_24dp"
-                android:title="Logout" />
+                android:title="@string/logout" />
         </menu>
     </item>
 

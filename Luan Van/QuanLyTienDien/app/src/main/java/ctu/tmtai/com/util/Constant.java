@@ -12,7 +12,6 @@ public class Constant {
 
     public static String USERNAME = "username";
     public static String LOGINED = "logined";
-    public static String ALL_DATA_USER_LOGIN = "allDataUserLogin";
     public static String REMEMBER_ME = "rememberMe";
     public static String ERROR = "ERROR";
     public static String ROLE_ADMIN = "admin";
@@ -29,7 +28,8 @@ public class Constant {
 
     //web service
     public static String HTTP = "http://";
-    public static String HOST = "192.168.1.14";
+//    public static String HOST = "192.168.1.14";
+    public static String HOST = "192.168.16.219";
     public static String PORT = ":8888/";
     public static String URL = HTTP + HOST + PORT;
 

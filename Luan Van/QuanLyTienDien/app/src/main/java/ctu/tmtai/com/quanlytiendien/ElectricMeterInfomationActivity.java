@@ -204,7 +204,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
                 String str2 = Jsoup.connect(HTTP_GET_DIEN_KE_BY_MA_KH).data(MA_KH, khachHang.getMakh()).get().body().text();
                 JSONArray jsonArray2 = new JSONArray(str2);
 
-                Log.d("Dien Ke ==" , str2);
                 for (int i=0;i<jsonArray2.length(); i++){
                     DienKe dienKe = new DienKe(jsonArray2.getJSONObject(i));
                     listDienKe.add(dienKe);
@@ -233,7 +232,6 @@ public class ElectricMeterInfomationActivity extends AppCompatActivity implement
                 String str2 = Jsoup.connect(HTTP_GET_DIEN_KE_BY_MA_KH).data(MA_KH, khachHang.getMakh()).get().body().text();
                 JSONArray jsonArray2 = new JSONArray(str2);
 
-                Log.d("Dien Ke ==" , str2);
                 for (int i=0;i<jsonArray2.length(); i++){
                     DienKe dienKe = new DienKe(jsonArray2.getJSONObject(i));
                     listDienKe.add(dienKe);

@@ -156,7 +156,11 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp, TextWa
             @Override
             public void onClick(View v) {
                 try {
-                    addUser();
+                    if (!checkEmpty()){
+                        addUser();
+                    }else{
+                        Notify.showToast(getApplicationContext(), getText(R.string.input_invalid).toString(), Notify.LONG);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -178,6 +182,40 @@ public class AddUserActivity extends AppCompatActivity implements ApiApp, TextWa
                 txtElectricityUser.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    private boolean checkEmpty(){
+        if (rdCustomer.isChecked()){
+            if (txtCodeUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtElectricityUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtNameUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtBirthdayUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtIdUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+        }else{
+            if (txtCodeUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtNameUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtBirthdayUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+            if (txtIdUser.getText().toString().equalsIgnoreCase("")){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addUser() throws IOException, JSONException {
