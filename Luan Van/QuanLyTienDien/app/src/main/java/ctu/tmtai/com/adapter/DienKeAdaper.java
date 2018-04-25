@@ -46,7 +46,6 @@ public class DienKeAdaper extends ArrayAdapter<DienKe> {
         TextView txtItemChiSoCuListDK = (TextView) view.findViewById(R.id.txtItemChiSoCuListDK);
         TextView txtItemChiSoMoiListDK = (TextView) view.findViewById(R.id.txtItemChiSoMoiListDK);
         TextView txtItemSoTien = (TextView) view.findViewById(R.id.txtItemSoTien);
-        TextView txtView = (TextView) view.findViewById(R.id.txtView);
 
         DienKe dienKe = this.objects.get(position);
         String month = "month_" + dienKe.getMathang();
@@ -67,7 +66,6 @@ public class DienKeAdaper extends ArrayAdapter<DienKe> {
                 txtItemChiSoCuListDK.setTextColor(Color.RED);
                 txtItemChiSoMoiListDK.setTextColor(Color.RED);
                 txtItemSoTien.setTextColor(Color.RED);
-                txtView.setTextColor(Color.RED);
             }
         }else{
 

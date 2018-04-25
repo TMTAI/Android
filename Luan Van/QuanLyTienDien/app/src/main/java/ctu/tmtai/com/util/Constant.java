@@ -29,7 +29,8 @@ public class Constant {
     //web service
     public static String HTTP = "http://";
 //    public static String HOST = "192.168.1.14";
-    public static String HOST = "192.168.16.219";
+//    public static String HOST = "192.168.0.104";
+    public static String HOST = "172.30.115.65";
     public static String PORT = ":8888/";
     public static String URL = HTTP + HOST + PORT;
 
